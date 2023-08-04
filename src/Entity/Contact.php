@@ -4,7 +4,7 @@ namespace App\Entity;
 
 class contact
 {
-
+    protected $id;
     protected $identifiant_id;
     protected $numero_telephone;
 
@@ -12,6 +12,25 @@ class contact
     protected $prenom;
     protected $nom;
     protected $adress_email;
+
+    /**
+     * @return int
+     */
+    public function getId():int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return contact
+     */
+    public function setId($id):self
+    {
+        $this->id = (int) $id;
+        return $this;
+    }
+
 
     /**
      * @return int

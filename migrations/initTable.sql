@@ -9,10 +9,11 @@ CREATE TABLE IF NOT EXISTS identifiant (
 
 
 CREATE TABLE IF NOT EXISTS avis (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     identifiant_id INT UNSIGNED,
     commentaire TEXT(6000) NOT NULL,
-    note TINYINT UNSIGNED NOT NULL,
-    PRIMARY KEY (identifiant_id),
+    note TINYINT UNSIGNED DEFAULT 1 ,
+    PRIMARY KEY (id),
     CONSTRAINT  fk_avis
         FOREIGN KEY (identifiant_id)
         REFERENCES identifiant (id)
@@ -21,10 +22,11 @@ CREATE TABLE IF NOT EXISTS avis (
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS contact(
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     identifiant_id INT UNSIGNED,
     numero_telephone INT UNSIGNED NOT NULL,
     message TEXT(6000) NOT NULL,
-    PRIMARY KEY (identifiant_id),
+    PRIMARY KEY (id),
     CONSTRAINT  fk_contact
     FOREIGN KEY (identifiant_id)
     REFERENCES identifiant (id)
@@ -79,7 +81,7 @@ CREATE TABLE IF NOT EXISTS caracteristique_voiture (
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS service_garage(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     nom_service VARCHAR(255) NOT NULL UNIQUE
 )ENGINE=InnoDB;
 

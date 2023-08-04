@@ -4,27 +4,64 @@ namespace App\Entity;
 
 class Avis
 {
-    protected $identifianit_id;
+    protected  $id;
+    protected $identifiant_id;
     protected $commentaire;
 
-    protected $note;
+    protected $note=1;
     protected $nom;
+    protected $adress_email;
+
+    /**
+     * @return string
+     */
+    public function getAdressEmail():string
+    {
+        return $this->adress_email;
+    }
+
+    /**
+     * @param string $adress_email
+     * @return Avis
+     */
+    public function setAdressEmail(string $adress_email):self
+    {
+        $this->adress_email = $adress_email;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId():int
+    {
+        return $this->id;
+    }
+    /**
+     * @param mixed $id
+     * @return Avis
+     */
+    public function setId($id):self
+    {
+        $this->id = (int)$id;
+        return $this;
+    }
 
     /**
      * @return int
      */
     public function getIdentifianitId():int
     {
-        return $this->identifianit_id;
+        return $this->identifiant_id;
     }
 
     /**
      * @param mixed $identifianit_id
      * @return Avis
      */
-    public function setIdentifianitId($identifianit_id):self
+    public function setIdentifiantId($identifianit_id):self
     {
-        $this->identifianit_id =(int) $identifianit_id;
+        $this->identifiant_id =(int) $identifianit_id;
         return $this;
     }
 
