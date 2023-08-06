@@ -98,9 +98,9 @@ class contact
      * @param string $prenom
      * @return contact
      */
-    public function setPrenom(string $prenom):self
+    public function setPrenom(?string $prenom):self
     {
-        $this->prenom = $prenom;
+        if($prenom){$this->prenom = $prenom;}
         return $this;
     }
 

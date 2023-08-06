@@ -50,7 +50,7 @@ class Avis
     /**
      * @return int
      */
-    public function getIdentifianitId():int
+    public function getIdentifiantId():int
     {
         return $this->identifiant_id;
     }

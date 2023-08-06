@@ -32,13 +32,16 @@ class TableIdentifiant
     /**
      * @descript search id if email exit
      * @param string $email
-     * @return false|int
+     * @return false|array
      */
     public function isEmailExite(string $email)
     {
-        $req = $this->bdd->prepare("SELECT COUNT(adress_email),id FROM identifiant WHERE adress_email = :email");
+        // bug si n'est pas dans une variable !!!
+        $query = "SELECT COUNT(adress_email), id , prenom FROM identifiant WHERE adress_email = :email ";
+        $req = $this->bdd->prepare($query);
         $req->bindValue('email',$email,PDO::PARAM_STR);
-       $rep =  $req->fetch(PDO::FETCH_ASSOC);
-       return $rep['count'] == '0' ? false : (int) $rep['id'];
+        $req->execute();
+        $rep = $req->fetch(PDO::FETCH_ASSOC);
+       return $rep['COUNT(adress_email)'] == '0' ? false : $rep;
     }
 }

@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS contact(
 
 CREATE TABLE IF NOT EXISTS user(
     identifiant_id INT UNSIGNED,
-    role enum('Employé','Administrateur') NOT NULL,
+    role enum('Employ','Administrateur') NOT NULL,
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (identifiant_id),
     CONSTRAINT  fk_user
