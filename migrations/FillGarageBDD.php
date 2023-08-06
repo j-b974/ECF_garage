@@ -4,50 +4,58 @@ use \App\Repository\DataBaseGarage;
 require dirname(__DIR__).'/vendor/autoload.php';
 
 $bdd = DataBaseGarage::connection();
-$Tavis = new \App\Repository\TableAvis($bdd);
-$Tcontact = new \App\Repository\TableContact($bdd);
-$Tuser = new \App\Repository\TableUser($bdd);
+
+// creation de voiture occassion
 $Tcar = new \App\Repository\TableUsedCar($bdd);
-$avis1 = new \App\Entity\Avis();
-
-$car = new \App\Entity\UsedCar();
-$car->setPrix(25500)
-    ->setKilometrage(33000)
-    ->setAnneeFabrication("21-07-2012");
-$Tcar->addUserCar($car);
-$req = $Tcar->getAllUserCar();
-var_dump($req);
-
-/**$avis1->setNom('bobibi')
-    ->setCommentaire('jlkjmkjune long commentaijkljkjre teste testtt')
-    ->setNote(3)
-    ->setAdressEmail('dfe-thbv-r@ok');
-$Tavis->addAvis($avis1);
-$rep = $Tavis->getAllAvis();
-*/
-/**$user = new \App\Entity\User();
-$user->setNom('bebe55')
-    ->setPrenom('dododo55')
-    ->setAdressEmail('dfkjkljklmkdfdfe.hug')
-    ->setPassword('123456789')
-    ->setRole('Employ');
-$Tuser->addUser($user);
-*/
-
-/**$contact = new \App\Entity\contact();
-$contact->setNom('lolo')
-    ->setPrenom('pierre')
-    ->setAdressEmail('aaa@bbb.ff')
-    ->setMessage('je suis ok ')
-    ->setNumeroTelephone(123456789);
-$Tcontact->addContact($contact);
-$rep = $Tcontact->getAllContact();
- */
-
+$faker = Faker\Factory::create('fr_FR');
+for($i=0;$i<= 50 ;$i++)
+{
+    $car = new \App\Entity\UsedCar();
+    $car->setPrix($faker->numberBetween(3,22)*1000)
+        ->setKilometrage($faker->numberBetween(6 , 18)*10000)
+        ->setAnneeFabrication($faker->dateTime()->format('Y-m-d'));
+    $Tcar->addUserCar($car);
+    $Tcar->getAllUserCar();
+}
+// creation d'avis
+$Tavis = new \App\Repository\TableAvis($bdd);
+for($i=0; $i<= 50; $i++)
+{
+    $avis1 = new \App\Entity\Avis();
+    $avis1->setNom($faker->lastName())
+        ->setCommentaire($faker->realText(155))
+        ->setNote($faker->numberBetween(1,5))
+        ->setAdressEmail($faker->email());
+    $Tavis->addAvis($avis1);
+    $Tavis->getAllAvis();
+}
+// creation de contact
+$Tcontact = new \App\Repository\TableContact($bdd);
+for($i=0;$i<=50;$i++)
+{
+    $contact = new \App\Entity\contact();
+    $contact->setNom($faker->lastName())
+        ->setPrenom($faker->firstName())
+        ->setAdressEmail($faker->email())
+        ->setMessage($faker->realText(155))
+        ->setNumeroTelephone($faker->phoneNumber());
+    $Tcontact->addContact($contact);
+    $rep = $Tcontact->getAllContact();
+}
+// creation utilisateur
+$Tuser = new \App\Repository\TableUser($bdd);
+for($i=0;$i<=50 ; $i++)
+{
+    $user = new \App\Entity\User();
+    $user->setNom($faker->lastName())
+        ->setPrenom($faker->firstName())
+        ->setAdressEmail($faker->email())
+        ->setPassword($faker->password())
+        ->setRole('Employ');
+    $Tuser->addUser($user);
+}
 
 //$req = $bdd->query("INSERT INTO identifiant (nom , prenom,adress_email) values ('jean','bruno','test@hotmaik.gg')");
 //$req->fetch();
-
-
 
 echo 'reussit !!!!';

@@ -2,7 +2,7 @@
 
 namespace App\Repository;
 
-use App\Entity\contact;
+use App\Entity\Contact;
 use \PDO;
 class TableContact
 {
@@ -26,11 +26,11 @@ class TableContact
     }
 
     /**
-     * @param contact $contact
+     * @param Contact $contact
      * @return void hydrate identifiant_id de l'object
      * @throws \Exception
      */
-    public function addContact(contact $contact)
+    public function addContact(Contact $contact)
     {
         $data = $this->isEmailExite($contact);
 
@@ -49,7 +49,7 @@ class TableContact
         $req->execute();
         if(!$req){throw  new \Exception("insertion contact n'a pas réussit !!!");}
     }
-    public function isEmailExite(contact $contact)
+    public function isEmailExite(Contact $contact)
     {
         return $this->Tidentifiant->isEmailExite($contact->getAdressEmail());
 

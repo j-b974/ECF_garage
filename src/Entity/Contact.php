@@ -2,7 +2,7 @@
 
 namespace App\Entity;
 
-class contact
+class Contact
 {
     protected $id;
     protected $identifiant_id;

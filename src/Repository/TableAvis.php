@@ -41,7 +41,7 @@ class TableAvis
             $avis->setIdentifiantId($data['id']);
         }else{
           $id =   $this->Tidentifiant->addIdentifiant($avis->getNom(),$avis->getAdressEmail());
-          $avis->setIdentifianitId($id);
+          $avis->setIdentifiantId($id);
         }
         $req = $this->bdd->prepare("INSERT INTO avis SET identifiant_id = :id , commentaire = :com , note = :note");
         $req->bindValue('id',$avis->getIdentifiantId(),\PDO::PARAM_INT);
