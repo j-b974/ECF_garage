@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voiture d'Occassion{% endblock %}
+
+{% block body %}
+    <style>
+
+    </style>
+    <h1 class="text-center mt-4"> Voiture d'occassion</h1>
+    {% include 'Partials/cards/usedCarCard.html.twig' %}
+    <div class=" d-flex justify-content-center">
+        {{ knp_pagination_render(lstCar) }}
+    </div>
+
+{% endblock %}

@@ -9,6 +9,7 @@ class Avis
     protected $commentaire;
 
     protected $note=1;
+
     protected $nom;
     protected $adress_email;
 

@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis - administration{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-4"> gestion des Avis</h1>
+    <p><a class="btn btn-info" href={{ path('create_avis') }}>Ajouter une Avis</a></p>
+    {% if not lstAvis is same as([]) %}
+        {% include 'partials/Tableau/avisTableau.html.twig' %}
+    {% else %}
+        <h4>il n'y a pas de Avis !!!</h4>
+    {% endif %}
+{% endblock %}
