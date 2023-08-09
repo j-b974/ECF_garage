@@ -48,6 +48,7 @@ class TableAvis
         $req->bindValue('com',$avis->getCommentaire(),\PDO::PARAM_STR);
         $req->bindValue('note',$avis->getNote(),\PDO::PARAM_INT);
         $req->execute();
+        $avis->setId($this->bdd->lastInsertId());
         if(!$req){throw new \Exception("insertion avis n'a pas reussit !!!");}
 
         return $this;

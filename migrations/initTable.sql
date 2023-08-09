@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS identifiant (
 CREATE TABLE IF NOT EXISTS avis (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     identifiant_id INT UNSIGNED,
-    commentaire TEXT(6000) NOT NULL,
+    commentaire TEXT(600) NOT NULL,
     note TINYINT UNSIGNED DEFAULT 1 ,
     PRIMARY KEY (id),
     CONSTRAINT  fk_avis
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS contact(
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
     identifiant_id INT UNSIGNED,
     numero_telephone INT UNSIGNED NOT NULL,
-    message TEXT(6000) NOT NULL,
+    message TEXT(600) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT  fk_contact
     FOREIGN KEY (identifiant_id)
