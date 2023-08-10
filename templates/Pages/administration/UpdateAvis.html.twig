@@ -1,0 +1,41 @@
+{% extends 'base.html.twig'  %}
+{% block title %}Avis - Modification{% endblock %}
+
+{% block body %}
+    <style>
+        .formWidth{
+            max-width: 595px;
+        }
+    </style>
+
+    <h1 class="text-center mb-4"> Modification d' un Avis</h1>
+    <div class="formWidth m-auto">
+        {{ form_start(AvisForm) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(AvisForm) }}
+        </div >
+        <div class="form-floating mb-3 text-dark">
+            {{ form_widget(AvisForm.nom) }}
+            {{ form_label(AvisForm.nom) }}
+            {{ form_errors(AvisForm.nom) }}
+        </div>
+        <div class="form-floating mb-3 text-dark">
+            {{ form_widget(AvisForm.adress_email) }}
+            {{ form_label(AvisForm.adress_email) }}
+            {{ form_errors(AvisForm.adress_email) }}
+        </div>
+        {{ form_label(AvisForm.note) }}
+        {{ form_widget(AvisForm.note) }}
+        {{ form_errors(AvisForm.note) }}
+        <div class="col" id="some-custom-id">
+            <div class="form-floating">
+                {{ form_widget(AvisForm.commentaire) }}
+                {{ form_label(AvisForm.commentaire) }}
+                {{ form_errors(AvisForm.commentaire) }}
+            </div>
+        </div>
+        {{ form_row(AvisForm.submit) }}
+    </div>
+    </div>
+    {{ form_end(AvisForm) }}
+{% endblock %}

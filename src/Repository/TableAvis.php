@@ -55,8 +55,40 @@ class TableAvis
     }
     public function isEmailExite(Avis $avis)
     {
-
         $id = $this->Tidentifiant->isEmailExite($avis->getAdressEmail());
         return $id;
+    }
+    public function getAvisById(int $id):Avis
+    {
+
+        $req = $this->bdd->query("SELECT * ,identifiant.nom , identifiant.adress_email FROM avis 
+            LEFT JOIN identifiant ON identifiant_id = identifiant.id
+            WHERE avis.id=$id ");
+        $req->setFetchMode(\PDO::FETCH_CLASS, Avis::class);
+        $avis = $req->fetch();
+        return $avis;
+    }
+    public function updateAvis(Avis $avis):Avis
+    {
+        $req = $this->bdd->prepare("UPDATE avis SET commentaire= :comm , note= :note WHERE id = :id LIMIT 1");
+        $req->bindValue('note',$avis->getNote(),\PDO::PARAM_INT);
+        $req->bindValue('comm',$avis->getCommentaire(),\PDO::PARAM_STR);
+        $req->bindValue('id',$avis->getId(), \PDO::PARAM_INT);
+        $req->execute();
+        if(!$req){ throw new \Exception('Update AVis non reussit !!!');
+        }
+        return $avis;
+    }
+
+    /**
+     * @param int|Avis $avis id ou Avis
+     * @return void
+     * @throws
+     */
+    public function delecte(int|Avis $avis):void
+    {
+        $id = $avis instanceof Avis ? $avis->getId() : $avis;
+        $req = $this->bdd->query("DELETE FROM avis WHERE id = $id LIMIT 1");
+        if(!$req){throw new \Exception("la suppréssion ne c'est pas éffectuée !!!");}
     }
 }

@@ -13,6 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminAvisController extends AbstractController
 {
+    /**
+     * Vue initiale
+     * @return Response
+     */
     #[Route('/admin/avis', name: 'admin_avis',methods: ['GET','POST'])]
     public function index(): Response
     {
@@ -24,6 +28,13 @@ class AdminAvisController extends AbstractController
             'lstAvis'=>$lstAvis
         ]);
     }
+
+    /**
+     * Vue Creation Avis
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
     #[Route('/admin/avis/Creation', name:'create_avis', methods: ['GET','POST'])]
     public function new(Request $request):Response
     {
@@ -47,6 +58,46 @@ class AdminAvisController extends AbstractController
         return $this->render('Pages/administration/CreatAvis.html.twig',[
             'AvisForm' =>$form->createView()// important !!!
         ]);
+    }
+    #[Route('/admin/avis/Modification/{id}',name:'update_avis',methods:['GET','POST'])]
+    public function update(Request $request, $id):Response
+    {
+        $bdd = DataBaseGarage::connection();
+        $Tavis = new TableAvis($bdd);
+        $avis = $Tavis->getAvisById($id);
+
+        $form = $this->createForm(AvisType::class,$avis);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $Tavis->updateAvis($avis);
+            $this->addFlash('succes',
+                " l'Avis #{$form->getData()->getId()} a était modifier avec succée !!!");
+            return $this->redirectToRoute('admin_avis');
+        }
+
+        return $this->render('Pages/administration/UpdateAvis.html.twig',[
+                'AvisForm'=>$form->createView()
+        ]);
+    }
+
+    /**
+     * Suppréssion de l'avis
+     * @param $id
+     * @return Response
+     * @throws \Exception
+     */
+    #[Route('/admin/avis/Suppression/{id}',name:'delete_avis',methods: ['GET'])]
+    public function delete($id):Response
+    {
+        $bdd = DataBaseGarage::connection();
+        $Tavis = new TableAvis($bdd);
+        $Tavis->delecte($id);
+        $this->addFlash('succes',
+            " l'Avis #$id a était supprimer avec succée !!!");
+
+        return $this->redirectToRoute('admin_avis');
     }
 
 }

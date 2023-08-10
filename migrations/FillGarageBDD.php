@@ -58,4 +58,4 @@ for($i=0;$i<=50 ; $i++)
 //$req = $bdd->query("INSERT INTO identifiant (nom , prenom,adress_email) values ('jean','bruno','test@hotmaik.gg')");
 //$req->fetch();
 
-echo 'reussit !!!!';
+echo 'la BDD a correctement était remplie !!!!';
