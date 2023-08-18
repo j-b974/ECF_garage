@@ -1,0 +1,41 @@
+<style>
+    .formWidth{
+        max-width: 595px;
+    }
+</style>
+
+<div class="formWidth m-auto">
+    {{ form_start(form)}}
+
+        {{ form_row(form.prix) }}
+        {{ form_row(form.annee_fabrication) }}
+        {{ form_row(form.kilometrage) }}
+        <hr>
+        <fieldset>
+                <h4 class="text-center mb-3">Caracterisque du véhicule</h4>
+                <div class="d-flex justify-content-around">
+                        {{ form_row(fromCaract.carburant) }}
+                        {{ form_row(fromCaract.nombrePorte) }}
+                        {{ form_row(fromCaract.boiteVitesse) }}
+                </div>
+        </fieldset>
+        <hr>
+        <fieldset class="text-center mb-3">
+                <h4>Option du véhicule</h4>
+
+                {{ form_row(formOption.gps) }}
+                {{ form_row(formOption.radarRecule) }}
+                {{ form_row(formOption.climatisation) }}
+
+        </fieldset>
+        <hr>
+
+            {{ form_row(form.image) }}
+
+        <hr>
+
+        {{ form_row(form.submit) }}
+
+
+    {{ form_end(form) }}
+</div>

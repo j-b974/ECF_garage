@@ -1,0 +1,29 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">Prix</th>
+        <th scope="col">année de fabrication</th>
+        <th scope="col">kilométrage</th>
+        <th scope="col">Option</th>
+        <th scope="col">caratéristique</th>
+        <th scope="col">list images</th>
+        <th scope="col"colspan="2" class="text-center">action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for car in lstcar %}
+        <tr>
+            <th scope="row">#{{ car.id }}</th>
+            <td>{{ car.prix }}</td>
+            <td>{{ car.anneeFabrication|date('Y')}}</td>
+            <td>{{ car.kilometrage }}</td>
+            <td>caratéristique</td>
+            <td>option</td>
+            <td>image</td>
+            <td><a class="btn btn-warning" href=""> modifier</a></td>
+            <td><a class="btn btn-danger" href="" title="Attention la suppression sera definitive!!!"> supprimer</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

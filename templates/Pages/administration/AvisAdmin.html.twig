@@ -3,13 +3,9 @@
 {% block title %}Avis - administration{% endblock %}
 
 {% block body %}
+
     <h1 class="text-center mb-4"> gestion des Avis</h1>
-    {% for message in app.flashes('succes') %}
-        <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
-            {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
+
     <p><a class="btn btn-info" href={{ path('create_avis') }}>Ajouter une Avis</a></p>
     {% if not lstAvis is same as([]) %}
         {% include 'partials/Tableau/avisTableau.html.twig' %}

@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS caracteristique_voiture (
     voiture_occassion_id INT UNSIGNED NOT NULL,
     carburant ENUM('essence','diesel','éléctrique'),
     nombre_porte TINYINT UNSIGNED ,
-    boite_vitesse ENUM('manuel','automatique'),
+    boite_vitesse ENUM('manuel','semi-auto','automatique'),
     PRIMARY KEY (voiture_occassion_id),
     CONSTRAINT  fk_caracteristique
     FOREIGN KEY (voiture_occassion_id)

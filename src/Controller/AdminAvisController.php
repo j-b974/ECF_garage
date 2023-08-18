@@ -11,20 +11,25 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin/avis')]
 class AdminAvisController extends AbstractController
 {
+    public function __construct()
+    {
+
+    }
     /**
      * Vue initiale
      * @return Response
      */
-    #[Route('/admin/avis', name: 'admin_avis',methods: ['GET','POST'])]
+    #[Route('/', name: 'admin_avis',methods: ['GET','POST'])]
     public function index(): Response
     {
         $bdd = DataBaseGarage::connection();
         $Tavis = new TableAvis($bdd);
         $lstAvis = $Tavis->getAllAvis();
         return $this->render('Pages/administration/AvisAdmin.html.twig', [
-            'controller_name' => 'AdminAvisController',
+            'adminAvis' => 'active',
             'lstAvis'=>$lstAvis
         ]);
     }
@@ -35,7 +40,7 @@ class AdminAvisController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    #[Route('/admin/avis/Creation', name:'create_avis', methods: ['GET','POST'])]
+    #[Route('/Creation', name:'create_avis', methods: ['GET','POST'])]
     public function new(Request $request):Response
     {
         $avis = new Avis();
@@ -48,7 +53,7 @@ class AdminAvisController extends AbstractController
             $Tavis = new TableAvis($bdd);
             $Tavis->addAvis($form->getData());
 
-            // lance un event a travers symfony
+            // lance un message_event a travers symfony
             // ecouteur sur templete => admin_avis
             $this->addFlash('succes',
               " l'Avis #{$form->getData()->getId()} a bien était créé !!!");
@@ -59,7 +64,7 @@ class AdminAvisController extends AbstractController
             'AvisForm' =>$form->createView()// important !!!
         ]);
     }
-    #[Route('/admin/avis/Modification/{id}',name:'update_avis',methods:['GET','POST'])]
+    #[Route('/Modification/{id}',name:'update_avis',methods:['GET','POST'])]
     public function update(Request $request, $id):Response
     {
         $bdd = DataBaseGarage::connection();
@@ -88,7 +93,7 @@ class AdminAvisController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    #[Route('/admin/avis/Suppression/{id}',name:'delete_avis',methods: ['GET'])]
+    #[Route('/Suppression/{id}',name:'delete_avis',methods: ['GET'])]
     public function delete($id):Response
     {
         $bdd = DataBaseGarage::connection();

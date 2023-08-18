@@ -12,9 +12,19 @@
                 </li>
             </ul>
         </div>
-        <div class="form-inline my-2 my-lg-0">
-            <a class="btn btn-outline-primary my-2 my-sm-0" href="{{ path('admin_avis') }}">Administration</a>
-            <a class="btn btn-outline-danger my-2 my-sm-0" href={{ path('connection') }}>Connection</a>
+        <div class="d-flex form-inline my-2 my-lg-0">
+            <div class="dropdown my-2 my-sm-0">
+                <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Administration
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="{{ path('admin_avis') }}">Avis</a></li>
+                    <li><a class="dropdown-item {{ adminUsedCar ?? "" }}" href="{{ path('usedCar.view') }}">voiture d'occassion</a></li>
+                    <li><a class="dropdown-item" href="#">Contact</a></li>
+                    <li><a class="dropdown-item" href="#">Service</a></li>
+                </ul>
+            </div>
+            <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('connection') }}>Connection</a>
         </div>
     </div>
 </nav>

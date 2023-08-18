@@ -1,23 +1,89 @@
 <?php
 
 namespace App\Entity;
-
+use App\Entity\OptionUsedCar;
+use App\Entity\CaracteristiqueCar;
+use Symfony\Component\Validator\Constraints as Assert;
 class UsedCar
 {
     protected $id ;
+    #[Assert\LessThan(999999)]
     protected $prix;
     protected $annee_fabrication;
+    #[Assert\LessThan(999999)]
     protected $kilometrage;
 
-    protected $Option;
+    /**
+     * @var OptionUsedCar
+     */
+    protected $option;
 
+    /**
+     * @var CaracteristiqueCar
+     */
     protected $caracteristique;
+
+    /**
+     * @return \App\Entity\CaracteristiqueCar
+     */
+    public function getCaracteristique(): ?\App\Entity\CaracteristiqueCar
+    {
+        return $this->caracteristique;
+    }
+
+    /**
+     * @param \App\Entity\CaracteristiqueCar $caracteristique
+     * @return UsedCar
+     */
+    public function setCaracteristique(\App\Entity\CaracteristiqueCar $caracteristique): UsedCar
+    {
+        $this->caracteristique = $caracteristique;
+        return $this;
+    }
+
+    /**
+     * @return \App\Entity\OptionUsedCar
+     */
+    public function getOption(): ?\App\Entity\OptionUsedCar
+    {
+
+        return $this->option;
+    }
+
+    /**
+     * @param \App\Entity\OptionUsedCar $option
+     * @return UsedCar
+     */
+    public function setOption(\App\Entity\OptionUsedCar $option): UsedCar
+    {
+        $this->option = $option;
+        return $this;
+    }
+    protected $image ='defaultCar.jpg' ;
+
+    /**
+     * @return mixed
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param mixed $image
+     * @return UsedCar
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
     protected $lstImage = [];
 
     /**
      * @return mixed
      */
-    public function getId():int
+    public function getId():?int
     {
         return $this->id;
     }
@@ -55,7 +121,13 @@ class UsedCar
      */
     public function getAnneeFabrication():\DateTime
     {
-        return new \DateTime($this->annee_fabrication);
+        if(is_object($this->annee_fabrication ))
+        {
+            return $this->annee_fabrication;
+        }else{
+            return new \DateTime($this->annee_fabrication);
+
+        }
     }
 
     /**
