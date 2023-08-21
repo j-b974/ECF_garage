@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CaracteristiqueCar;
+use App\Entity\ImageCar;
 use App\Entity\OptionUsedCar;
 use App\Entity\UsedCar;
 use App\Form\CaracterisqueCarType;
@@ -10,6 +11,7 @@ use App\Form\UsedCarType;
 use App\Form\OptionUsedCarType;
 use App\Repository\DataBaseGarage;
 use App\Repository\TableUsedCar;
+use App\Services\ImageFormat;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +43,7 @@ class AdminUsedCarController extends AbstractController
         ]);
     }
     #[Route('/Creation',name:'usedCar.create',methods: ['GET','POST'])]
-    public function creatUserCard(Request $request, SluggerInterface $slugger ):Response
+    public function creatUserCard(Request $request, SluggerInterface $slugger , ImageFormat $imageFormat ):Response
     {
 
         // init les classe
@@ -60,18 +62,24 @@ class AdminUsedCarController extends AbstractController
         if($form->isSubmitted() && $form->isValid() && $formCarat->isValid())
         {
 
-            $imageUplaoder = ($form->get('image')->getData());
-            if($imageUplaoder){
-                $usedCar->setImage($this->traitementImage($imageUplaoder,$slugger));
+            $imageUplaoder = ($form->get('lstImage')->getData());
+
+            foreach( $imageUplaoder as $image)
+            {
+               $namefile =  $imageFormat->add($image, '',250 ,250);
+               $imgCar = new ImageCar();
+               $imgCar->setPathImage($namefile);
+               $usedCar->setLstImage($imgCar);
             }
+
+
             $usedCar->setCaracteristique($formCarat->getData());
+
 
             if($formOption->isSubmitted() && $formOption->isValid())
             {
                 $usedCar->setOption($formOption->getData());
             }
-
-
             // percitence sur la bdd
             $this->TusedCar->addUserCar($usedCar);
 

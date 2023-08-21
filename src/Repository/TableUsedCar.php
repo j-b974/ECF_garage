@@ -2,13 +2,14 @@
 
 namespace App\Repository;
 use App\Entity\UsedCar;
-use App\Repository\{TableOptionCar,TableCarateristiqueCar};
+use App\Repository\{TableOptionCar,TableCarateristiqueCar,TableImageCar};
 use \PDO;
 class TableUsedCar
 {
     private $bdd;
     private $ToptionCar;
     private $TcaraterisqueCar;
+    private $TimageCar;
     /**
      * @param $bdd
      */
@@ -17,6 +18,7 @@ class TableUsedCar
         $this->bdd = $bdd;
         $this->TcaraterisqueCar = new TableCarateristiqueCar($this->bdd);
         $this->ToptionCar = new TableOptionCar($this->bdd);
+        $this->TimageCar = new TableImageCar($this->bdd);
     }
     public function getAllUserCar()
     {
@@ -35,6 +37,7 @@ class TableUsedCar
         if(!$req){throw new \Exception("insertion voiture n'a pas réussit !!!");}
 
         $id =(int) $this->bdd->lastInsertId();
+        $car->setId($id);
         if($car->getCaracteristique() !== null){
             $carat = $car->getCaracteristique();
             $carat->setVoitureOccassionId($id);
@@ -45,6 +48,14 @@ class TableUsedCar
         {
             $opt = $car->getOption()->setVoitureOccassionId($id);
             $this->ToptionCar->addOptionCar($opt);
+        }
+        if(!empty($car->getLstImage()))
+        {
+            foreach($car->getLstImage() as $imgCar)
+            {
+                $imgCar->setVoitureOccassionId($id);
+                $this->TimageCar->addImageCar($imgCar);
+            }
         }
     }
 

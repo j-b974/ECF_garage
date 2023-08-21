@@ -59,26 +59,32 @@ class UsedCar
         $this->option = $option;
         return $this;
     }
-    protected $image ='defaultCar.jpg' ;
+    protected $lstImage = [];
 
     /**
-     * @return mixed
+     * @return ImageCar[]
      */
-    public function getImage()
+    public function getLstImage(): array
     {
-        return $this->image;
+        if(empty($this->lstImage)){
+            $img = new ImageCar();
+            $img->setPathImage('defaultCar.jpg');
+            $this->setLstImage($img);
+        }
+        return $this->lstImage;
     }
 
     /**
-     * @param mixed $image
+     * @param ImageCar $img
      * @return UsedCar
      */
-    public function setImage($image)
+    public function setLstImage(ImageCar $img): UsedCar
     {
-        $this->image = $image;
+        if(!in_array($img ,$this->lstImage)){
+            $this->lstImage[] = $img;
+        }
         return $this;
     }
-    protected $lstImage = [];
 
     /**
      * @return mixed

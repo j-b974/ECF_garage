@@ -40,9 +40,11 @@ class UsedCarType extends AbstractType
                 ]
             ])
 
-            ->add('image',FileType::class,[
+            ->add('lstImage',FileType::class,[
 
                 'label' => 'Voiture occassion ( file gif / png / jpeg)',
+                'multiple'=>true,
+
                 // unmapped means that this field is not associated to any entity property
                 'mapped' => false,
                 // make it optional so you don't have to re-upload the PDF file
@@ -51,15 +53,18 @@ class UsedCarType extends AbstractType
                 // unmapped fields can't define their validation using annotations
                 // in the associated entity, so you can use the PHP constraint classes
                 'constraints' => [
-                    new File([
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/gif',
-                            'image/png',
-                            'image/jpeg'
-                        ],
-                        'mimeTypesMessage' => 'charger un valide image de voiture',
-                    ])
+                    new Assert\All(// multiple est true donc contrain pour chaque fichier
+                        new File([
+                            'maxSize' => '1024k',
+                            'mimeTypes' => [
+                                'image/png',
+                                'image/jpeg',
+                                'image/webp'
+                            ],
+                            'mimeTypesMessage' => 'charger une image valide de voiture',
+                        ])
+                    ),
+
                 ],
             ])
 
