@@ -5,7 +5,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 class CaracteristiqueCar
 {
     private $voiture_occassion_id;
-    #[Assert\Choice(['essence','diesel','éléctrique'])]
+    #[Assert\Choice(['essence','diesel','electrique'])]
     private $carburant;
     #[Assert\Choice(['manuel','semi-auto','automatique'])]
     private $boite_vitesse;

@@ -35,9 +35,11 @@ class UsedCar
      * @param \App\Entity\CaracteristiqueCar $caracteristique
      * @return UsedCar
      */
-    public function setCaracteristique(\App\Entity\CaracteristiqueCar $caracteristique): UsedCar
+    public function setCaracteristique(bool|\App\Entity\CaracteristiqueCar $caracteristique): UsedCar
     {
-        $this->caracteristique = $caracteristique;
+        if($caracteristique && is_object($caracteristique)){
+            $this->caracteristique = $caracteristique;
+        }
         return $this;
     }
 
@@ -54,9 +56,11 @@ class UsedCar
      * @param \App\Entity\OptionUsedCar $option
      * @return UsedCar
      */
-    public function setOption(\App\Entity\OptionUsedCar $option): UsedCar
+    public function setOption(bool |\App\Entity\OptionUsedCar $option): UsedCar
     {
-        $this->option = $option;
+        if($option && is_object($option)) {
+            $this->option = $option;
+        }
         return $this;
     }
     protected $lstImage = [];
@@ -69,7 +73,7 @@ class UsedCar
         if(empty($this->lstImage)){
             $img = new ImageCar();
             $img->setPathImage('defaultCar.jpg');
-            $this->setLstImage($img);
+            $this->setImage($img);
         }
         return $this->lstImage;
     }
@@ -78,10 +82,17 @@ class UsedCar
      * @param ImageCar $img
      * @return UsedCar
      */
-    public function setLstImage(ImageCar $img): UsedCar
+    public function setImage(ImageCar $img): UsedCar
     {
         if(!in_array($img ,$this->lstImage)){
             $this->lstImage[] = $img;
+        }
+        return $this;
+    }
+    public function setLstImage(array $img):UsedCar
+    {
+        if(!empty($img)){
+            $this->lstImage = $img;
         }
         return $this;
     }

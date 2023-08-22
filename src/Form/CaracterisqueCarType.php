@@ -21,11 +21,11 @@ class CaracterisqueCarType extends AbstractType
                 'choices'=>[
                     'essence'=>'essence',
                     'diésel'=>'diesel',
-                    'éléctrique'=>'éléctrique'
+                    'éléctrique'=>'electrique',
                 ],
                     'constraints'=>[
                         new Assert\NotBlank(),
-                        new Assert\Choice(['essence','diesel','éléctrique']),
+                        new Assert\Choice(['essence','diesel','electrique']),
                     ]
             ])
             ->add('nombrePorte',ChoiceType::class,[

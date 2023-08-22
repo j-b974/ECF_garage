@@ -32,7 +32,7 @@ class OptionUsedCar
      */
     public function getGps()
     {
-        return $this->gps;
+        return(bool) $this->gps;
     }
 
     /**
@@ -50,7 +50,7 @@ class OptionUsedCar
      */
     public function getRadarRecule()
     {
-        return $this->radar_recule;
+        return (bool) $this->radar_recule;
     }
 
     /**
@@ -68,7 +68,7 @@ class OptionUsedCar
      */
     public function getClimatisation()
     {
-        return $this->climatisation;
+        return (bool) $this->climatisation;
     }
 
     /**

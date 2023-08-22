@@ -27,6 +27,21 @@ class TableImageCar
 
     }
 
+    public function getLstImageCarById(int $id):array
+    {
+        $query ="SELECT * FROM image_voiture WHERE voiture_occassion_id = :id";
+        $req = $this->bdd->prepare($query);
+
+        $req->bindValue('id',$id,PDO::PARAM_INT);
+        $req->execute();
+
+        if(!$req){throw new \Exception('erreur des récupération img !!!');}
+
+        $req->setFetchMode(PDO::FETCH_CLASS, ImageCar::class);
+        return $req->fetchAll();
+
+    }
+
 
 
 }

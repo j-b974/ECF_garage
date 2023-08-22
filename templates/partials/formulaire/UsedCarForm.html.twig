@@ -29,12 +29,27 @@
 
         </fieldset>
         <hr>
+                {% if app.request.attributes.get('_route') == 'usedCar.update' %}
+                <div>
+                        <h4 class="text-center mb-3">images</h4>
+                        <div class="mb-3 d-flex justify-content-around flex-wrap">
+                                {% dump(usedCarImg.getLstImage) %}
+                                {% for img in usedCarImg.getLstImage %}
+
+                                        <div class="d-flex flex-column mb-3">
+                                                <img src="{{ asset('image_voiture_occassion/mini/250X250_'~img.getPathImage) }}">
+                                                <a href="" data-delet data-token ="{{ csrf_token('delect'~img.id) }}">supprimeé</a>
+                                        </div>
+                                {% endfor %}
+                        </div>
+                </div>
+                {% endif %}
 
             {{ form_row(form.lstImage) }}
 
         <hr>
 
-        {{ form_row(form.submit) }}
+        {{ form_row(form.submit, {'label': bouton_label|default('Ajouter')} ) }}
 
 
     {{ form_end(form) }}

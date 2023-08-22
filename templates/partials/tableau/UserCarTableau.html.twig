@@ -21,7 +21,7 @@
             <td>caratéristique</td>
             <td>option</td>
             <td>image</td>
-            <td><a class="btn btn-warning" href=""> modifier</a></td>
+            <td><a class="btn btn-warning" href="{{ path('usedCar.update',{id: car.id}) }}"> modifier</a></td>
             <td><a class="btn btn-danger" href="" title="Attention la suppression sera definitive!!!"> supprimer</a></td>
         </tr>
     {% endfor %}
