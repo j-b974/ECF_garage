@@ -22,8 +22,11 @@
             <td>option</td>
             <td>image</td>
             <td><a class="btn btn-warning" href="{{ path('usedCar.update',{id: car.id}) }}"> modifier</a></td>
-            <td><a class="btn btn-danger" href="" title="Attention la suppression sera definitive!!!"> supprimer</a></td>
+            <td><a class="btn btn-danger" href="{{ path('usedCar.delete',{id:car.id}) }}" data-delete data-token="{{ csrf_token('delete'~car.id) }}" title="Attention la suppression sera definitive!!!"> supprimer</a></td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+{% block javascripts %}
+<script src="{{ asset('asset/js/managerUsedCarDelete.js')}}" defer ></script>
+{% endblock %}

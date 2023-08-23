@@ -33,13 +33,13 @@
                 <div>
                         <h4 class="text-center mb-3">images</h4>
                         <div class="mb-3 d-flex justify-content-around flex-wrap">
-                                {% dump(usedCarImg.getLstImage) %}
                                 {% for img in usedCarImg.getLstImage %}
-
+                                    {% if img.id is not null %}
                                         <div class="d-flex flex-column mb-3">
                                                 <img src="{{ asset('image_voiture_occassion/mini/250X250_'~img.getPathImage) }}">
-                                                <a href="" data-delet data-token ="{{ csrf_token('delect'~img.id) }}">supprimeé</a>
+                                                <a href="{{ path('image.delete',{id:img.id}) }}" data-delete data-token ="{{ csrf_token('delete'~img.id) }}">supprimeé</a>
                                         </div>
+                                    {% endif %}
                                 {% endfor %}
                         </div>
                 </div>
@@ -54,3 +54,6 @@
 
     {{ form_end(form) }}
 </div>
+{% block javascripts %}
+        <script src="{{ asset('asset/js/managerSuppression.js')}}" defer ></script>
+{% endblock %}

@@ -148,5 +148,13 @@ class TableUsedCar
             }
         }
     }
+    public function deleteUsedCar(UsedCar $usedCar)
+    {
+        $query ="DELETE FROM voiture_occassion
+                 WHERE id = :id LIMIT 1";
+        $req =$this->bdd->prepare($query);
+        $req->bindValue('id',$usedCar->getId(),PDO::PARAM_INT);
+        $req->execute();
+    }
 
 }
