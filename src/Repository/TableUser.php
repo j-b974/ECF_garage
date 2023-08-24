@@ -38,9 +38,9 @@ class TableUser
     {
         return $this->Tidentifiant->isEmailExite($user->getAdressEmail());
     }
-    public function getUserById(int $id)
+    public function getUserById(int $id):bool|User
     {
-        $req = $this->bdd->query("SELECT  user.role , user.identifiant_id , identifiant.nom , identifiant.prenom, identifiant.adress_email FROM user 
+        $req = $this->bdd->query("SELECT  user.role , user.identifiant_id, user.password, identifiant.nom , identifiant.prenom, identifiant.adress_email FROM user 
             LEFT JOIN identifiant ON user.identifiant_id = identifiant.id 
                WHERE identifiant.id = $id");
         $req->setFetchMode(PDO::FETCH_CLASS, user::class);

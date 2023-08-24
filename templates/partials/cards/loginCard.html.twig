@@ -1,14 +1,26 @@
 <div class="d-flex justify-content-center ">
-    <form class="col-md-4 " >
+    <form class="col-md-4 " method="post" >
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
         <h3 class="text-center">se connecter</h3>
         <div class="form-floating mb-3 text-dark">
-            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+            <input type="email" value="{{ last_username }} " name="adress_email" class="form-control" id="floatingInput" placeholder="name@example.com">
             <label for="floatingInput">votre email</label>
         </div>
         <div class="form-floating text-dark">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">votre password</label>
         </div>
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
             <button class="btn btn-outline-dark me-md-2" type="submit">Connection</button>
         </div>

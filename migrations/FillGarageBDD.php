@@ -5,6 +5,7 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 $bdd = DataBaseGarage::connection();
 
+echo 'debut de la création !!!';
 // creation de voiture occassion
 $Tcar = new \App\Repository\TableUsedCar($bdd);
 $faker = Faker\Factory::create('fr_FR');
@@ -43,14 +44,29 @@ for($i=0;$i<=50;$i++)
     $rep = $Tcontact->getAllContact();
 }
 // creation utilisateur
+
+echo PHP_EOL.'le hash des passWord va prend quelque instant  !!!';
 $Tuser = new \App\Repository\TableUser($bdd);
+$admin = new \App\Entity\User();
+$admin->setNom('super')
+    ->setPrenom('power')
+    ->setAdressEmail('admin@admin.com')
+    ->setRole('Administrateur')
+    ->setPassword(\App\Services\HasherGarage::hashUser()->hashPassword(
+        $admin,
+        'admin'
+    ));
+$Tuser->addUser($admin);
 for($i=0;$i<=50 ; $i++)
 {
     $user = new \App\Entity\User();
     $user->setNom($faker->lastName())
         ->setPrenom($faker->firstName())
         ->setAdressEmail($faker->email())
-        ->setPassword($faker->password())
+        ->setPassword(\App\Services\HasherGarage::hashUser()->hashPassword(
+            $user,
+            '1234'
+        ))
         ->setRole('Employ');
     $Tuser->addUser($user);
 }
@@ -58,4 +74,4 @@ for($i=0;$i<=50 ; $i++)
 //$req = $bdd->query("INSERT INTO identifiant (nom , prenom,adress_email) values ('jean','bruno','test@hotmaik.gg')");
 //$req->fetch();
 
-echo 'la BDD a correctement était remplie !!!!';
+echo PHP_EOL.'la BDD a correctement était remplie !!!!';

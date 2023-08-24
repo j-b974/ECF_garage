@@ -13,6 +13,8 @@
             </ul>
         </div>
         <div class="d-flex form-inline my-2 my-lg-0">
+            {% dump(app.user) %}
+            {% if app.user %}
             <div class="dropdown my-2 my-sm-0">
                 <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Administration
@@ -23,8 +25,13 @@
                     <li><a class="dropdown-item" href="#">Contact</a></li>
                     <li><a class="dropdown-item" href="#">Service</a></li>
                 </ul>
+                {% endif %}
             </div>
-            <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('connection') }}>Connection</a>
+            {% if app.user %}
+                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_logout') }}>Déconnection</a>
+            {% else %}
+                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_login') }}>Connection</a>
+            {% endif %}
         </div>
     </div>
 </nav>

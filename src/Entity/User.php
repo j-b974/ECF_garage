@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-class User
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     protected $identifiant_id;
 
-    protected $role;
+    protected $role = '';
 
-    protected $password;
+    protected $password ='';
 
     protected $nom;
+
     protected $adress_email;
 
     protected $prenom;
@@ -121,6 +125,28 @@ class User
     {
         if($prenom){$this->prenom = $prenom;};
         return $this;
+    }
+
+    public function getRoles(): array
+    {
+        $role = ['ROLE_CLIENT'];
+        if($this->role !== 'Administrateur'){
+            $role[]='ROLE_EMPLOYER';
+        }else{
+            $role[]= 'ROLE_DIRECTEUR';
+        }
+
+        return array_unique($role);
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->adress_email;
     }
 
 }
