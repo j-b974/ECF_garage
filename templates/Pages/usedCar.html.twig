@@ -7,10 +7,61 @@
     <style>
 
     </style>
-    <h1 class="text-center mt-4"> Voiture d'occassion</h1>
+    <h1 class="text-center mt-4 "> Voiture d'occassion</h1>
+    <div class="row bg-white ">
+        <div class="range col mt-4">
+            <label class=" mb-3">Prix</label>
+            <div class="range-slider">
+                <span class="range-selected prix"></span>
+            </div>
+            <div class="range-input ">
+                <input type="range" class="min" min="1000" max="999999" value="100000" step="500">
+                <input type="range" class="max" min="1000" max="999999" value="200000" step="500">
+            </div>
+            <div class="range-price">
+                <input type="number" min="500" max="999999" name="min" value="100000" class="min" step="500">
+                <input type="number"  min="500" max="999999" name="max" value="200000" step="500">
+            </div>
+        </div>
+        <div class="range col mt-4">
+            <label class=" mb-3">Kilométrage</label>
+            <div class="range-slider">
+                <span class="range-selected kilometrage"></span>
+            </div>
+            <div class="range-input">
+                <input type="range" class="min" min="5000" max="999999" value="11000" step="1000">
+                <input type="range" class="max" min="5000" max="999999" value="250000" step="1000">
+            </div>
+            <div class="range-price">
+                <input type="number" name="min" min="5000" max="999999" value="11000" class="min" step="1000">
+                <input type="number" name="max" min="5000" max="999999" value="250000" step="1000">
+            </div>
+        </div>
+        <div class="range col mt-4">
+            <label class=" mb-3">Année</label>
+            <div class="range-slider">
+                <span class="range-selected annee"></span>
+            </div>
+            <div class="range-input">
+                <input type="range" class="min" min="1900" max="2024" value="1975" step="1">
+                <input type="range" class="max" min="1900" max="2024" value="2024" step="1">
+            </div>
+            <div class="range-price">
+                <input type="number" min="1900" max="2024" name="min" value="1975" class="min" step="1">
+                <input type="number"  min="1900" max="2024" name="max" value="2024" step="1">
+            </div>
+        </div>
+
+    </div>
     {% include 'Partials/cards/usedCarCard.html.twig' %}
     <div class=" d-flex justify-content-center">
         {{ knp_pagination_render(lstCar) }}
     </div>
 
+{% endblock %}
+{% block stylesheets %}
+    <link href="{{ asset('asset/css/garageStyle.css') }}" rel="stylesheet">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/usedCarFiltre.js') }}"  crossorigin="anonymous" defer></script>
 {% endblock %}
