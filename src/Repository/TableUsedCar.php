@@ -20,9 +20,21 @@ class TableUsedCar
         $this->ToptionCar = new TableOptionCar($this->bdd);
         $this->TimageCar = new TableImageCar($this->bdd);
     }
-    public function getAllUserCar()
+    public function getAllUserCar(array $where = [])
     {
-        $req = $this->bdd->query("SELECT * FROM voiture_occassion");
+        if(!empty($where)){
+            $where = $this->getWhere($where);
+        }else{
+            $where = '';
+        }
+
+
+
+        //$where = "where prix > $prixMin and prix < $prixMax
+                  //and kilometrage > $KmMin and kilometrage < $kmMax ";
+        //$query ="SELECT * FROM voiture_occasssion $where";
+        $req = $this->bdd->prepare("SELECT * FROM voiture_occassion $where");
+        $req->execute();
         $req->setFetchMode(PDO::FETCH_CLASS, UsedCar::class);
         $lstUsedCar= $req->fetchAll();
         foreach ($lstUsedCar as $usedCar)
@@ -155,6 +167,56 @@ class TableUsedCar
         $req =$this->bdd->prepare($query);
         $req->bindValue('id',$usedCar->getId(),PDO::PARAM_INT);
         $req->execute();
+    }
+    public function getMinim(string $fieldTable):int
+    {
+        $query ="SELECT MIN($fieldTable) FROM voiture_occassion";
+        $req = $this->bdd->prepare($query);
+       // $req->bindParam('min',$fieldTable,PDO::PARAM_STR);
+        $req->execute();
+        return (int)( $req->fetch(PDO::FETCH_COLUMN));
+
+    }
+    public function getMaximun(string $fieldTable):int
+    {
+        $query ="SELECT MAX($fieldTable) FROM voiture_occassion";
+        $req = $this->bdd->prepare($query);
+        // $req->bindParam('min',$fieldTable,PDO::PARAM_STR);
+        $req->execute();
+        return (int)( $req->fetch(PDO::FETCH_COLUMN));
+
+    }
+    private function getWhere(array $list):string
+    {
+        $where = 'WHERE ';
+        foreach($list as $key =>  $value)
+        {
+            $value = (int) $value;
+
+            switch($key){
+                case 'minPrix':
+                    if($this->getMinim('prix') > $value){ $value = $this->getMinim(('prix'));}
+                    $where .= ' prix >  '.$value ; break;
+                case 'maxPrix':
+                    if($this->getMaximun('prix') < $value){ $value = $this->getMaximun(('prix'));}
+                    $where .= ' AND prix < '.$value;break;
+                case 'minKm':
+                    if($this->getMinim('kilometrage') > $value){ $value = $this->getMinim(('kilometrage'));}
+                    $where .= '  kilometrage > '.$value;break;
+                case 'maxKm':
+                    if($this->getMaximun('kilometrage') < $value){ $value = $this->getMaximun(('kilometrage'));}
+                    $where .= ' AND kilometrage < '.$value;break;
+                case 'minDate' :
+                    if($this->getMinim('annee_fabrication') > $value){ $value = $this->getMinim(('annee_fabrication'));}
+                    $where .= '  annee_fabrication > '.$value;break;
+                case 'maxDate':
+                    if($this->getMaximun('annee_fabrication') < $value){ $value = $this->getMaximun(('annee_fabrication'));}
+                    $where .= ' AND annee_fabrication < '.$value;break;
+                default :
+                    return '';
+            }
+        }
+        return $where;
     }
 
 }
