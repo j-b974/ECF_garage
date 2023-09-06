@@ -45,8 +45,8 @@ class AdminAvisController extends AbstractController
     {
         $avis = new Avis();
         $form = $this->createForm(AvisType::class, $avis);//  attention rendre creatView et non $form !!!
-
         $form->handleRequest($request);
+
         if($form->isSubmitted()&& $form->isValid())
         {
             $bdd = DataBaseGarage::connection();

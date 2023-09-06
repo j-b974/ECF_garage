@@ -24,6 +24,11 @@
                     <li><a class="dropdown-item {{ adminUsedCar ?? "" }}" href="{{ path('usedCar.view') }}">voiture d'occassion</a></li>
                     <li><a class="dropdown-item" href="#">Contact</a></li>
                     <li><a class="dropdown-item" href="#">Service</a></li>
+
+                    {% if is_granted('ROLE_DIRECTEUR')  %}
+                        <hr>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_compte') }}">Gerer les compte</a></li>
+                    {% endif %}
                 </ul>
                 {% endif %}
             </div>
