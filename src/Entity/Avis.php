@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 class Avis
 {
     protected  $id;
@@ -12,6 +12,26 @@ class Avis
 
     protected $nom;
     protected $adress_email;
+    #[Assert\Choice(['modifier','verifier','nouveau'])]
+    protected $publier = 'nouveau';
+
+    /**
+     * @return string
+     */
+    public function getPublier(): string
+    {
+        return $this->publier;
+    }
+
+    /**
+     * @param string $publier
+     * @return Avis
+     */
+    public function setPublier(string $publier): Avis
+    {
+        $this->publier = $publier;
+        return $this;
+    }
 
     /**
      * @return string

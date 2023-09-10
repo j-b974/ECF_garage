@@ -1,6 +1,6 @@
 
 CREATE TABLE IF NOT EXISTS identifiant (
-    id       INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id       INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
     nom        VARCHAR(255) NOT NULL,
     prenom       VARCHAR(255),
     adress_email VARCHAR(255) NOT NULL UNIQUE,
@@ -9,10 +9,11 @@ CREATE TABLE IF NOT EXISTS identifiant (
 
 
 CREATE TABLE IF NOT EXISTS avis (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    identifiant_id INT UNSIGNED,
+    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+    identifiant_id INT(255) UNSIGNED,
     commentaire TEXT(600) NOT NULL,
     note TINYINT UNSIGNED DEFAULT 1 ,
+    status enum('modifier','verifier','nouveau') NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT  fk_avis
         FOREIGN KEY (identifiant_id)
@@ -22,9 +23,10 @@ CREATE TABLE IF NOT EXISTS avis (
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS contact(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    identifiant_id INT UNSIGNED,
-    numero_telephone INT UNSIGNED NOT NULL,
+    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+    identifiant_id INT(255) UNSIGNED,
+    numero_telephone INT(30) UNSIGNED NOT NULL,
+    etat enum('nouveau','lu','traitement') NOT NULL,
     message TEXT(600) NOT NULL,
     PRIMARY KEY (id),
     CONSTRAINT  fk_contact
@@ -35,7 +37,7 @@ CREATE TABLE IF NOT EXISTS contact(
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS user(
-    identifiant_id INT UNSIGNED,
+    identifiant_id INT(255) UNSIGNED,
     role enum('Employ','Administrateur') NOT NULL,
     password VARCHAR(255) NOT NULL,
     PRIMARY KEY (identifiant_id),
@@ -47,15 +49,15 @@ CREATE TABLE IF NOT EXISTS user(
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS voiture_occassion (
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    prix INT UNSIGNED NOT NULL ,
+    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+    prix INT(255) UNSIGNED NOT NULL ,
     annee_fabrication date NOT NULL,
-    kilometrage INT UNSIGNED NOT NULL,
+    kilometrage INT(255) UNSIGNED NOT NULL,
     PRIMARY KEY (id)
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS option_voiture (
-    voiture_occassion_id INT UNSIGNED NOT NULL,
+    voiture_occassion_id INT(255) UNSIGNED NOT NULL,
     gps BOOLEAN ,
     radar_recule BOOLEAN,
     climatisation BOOLEAN,
@@ -68,7 +70,7 @@ CREATE TABLE IF NOT EXISTS option_voiture (
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS caracteristique_voiture (
-    voiture_occassion_id INT UNSIGNED NOT NULL,
+    voiture_occassion_id INT(255) UNSIGNED NOT NULL,
     carburant ENUM('essence','diesel','éléctrique'),
     nombre_porte TINYINT UNSIGNED ,
     boite_vitesse ENUM('manuel','semi-auto','automatique'),
@@ -81,12 +83,12 @@ CREATE TABLE IF NOT EXISTS caracteristique_voiture (
     )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS service_garage(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     nom_service VARCHAR(255) NOT NULL UNIQUE
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS image_voiture(
-    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
     voiture_occassion_id INT UNSIGNED NOT NULL ,
     path_image VARCHAR(255) NOT NULL,
     PRIMARY KEY (id),

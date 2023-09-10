@@ -1,0 +1,31 @@
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">id</th>
+        <th scope="col">auteur</th>
+        <th scope="col">numéro telephone</th>
+        <th scope="col">adress email</th>
+        <th>message</th>
+        <th scope="col" colspan="2" class="text-center">action</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for contact in lstData %}
+        <tr>
+            <th scope="row">#{{ contact.id }}</th>
+            <td>{{ contact.nom }} {{ contact.prenom ?? ''}}</td>
+            <td>{{ contact.numeroTelephone }}</td>
+            <td>{{ contact.adressEmail }}</td>
+            <td >{{ contact.message }}</td>
+            <td><a class="btn btn-success" href="{{ path('single_contact',{id:contact.id}) }}"> ouvrir</a></td>
+            {% if (contact.etat != 'nouveau') %}
+                <td><a class="btn btn-danger" href="{{ path('supprime.contact',{id:contact.id}) }}" data-delete data-token="{{ csrf_token('delete'~contact.id) }}" title="Attention la suppression sera definitive!!!"> supprimer</a></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% block javascripts %}
+    <script src="{{ asset('asset/js/deletContact.js')}}" defer ></script>
+{% endblock %}

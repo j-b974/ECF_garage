@@ -1,17 +1,56 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 class Contact
 {
     protected $id;
     protected $identifiant_id;
+    #[Assert\Length(
+        min: 9,
+        max: 30,
+        minMessage: 'doit avoir plus de  {{ limit }} caracters',
+        maxMessage: 'doit avoir moin que {{ limit }} caracters',
+    )]
+    #[Assert\NotBlank]
     protected $numero_telephone;
 
+    #[Assert\Length(
+        min: 25,
+        max: 599,
+        minMessage: 'doit avoir plus de  {{ limit }} caracters',
+        maxMessage: 'doit avoir moin que {{ limit }} caracters',
+    )]
+    #[Assert\NotBlank]
     protected $message;
+
     protected $prenom;
+
+    #[Assert\NotBlank]
     protected $nom;
+
+    #[Assert\NotBlank]
     protected $adress_email;
+    #[Assert\Choice(['nouveau','lu','traitement'])]
+    protected $etat = 'nouveau';
+
+    /**
+     * @return mixed
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param mixed $etat
+     * @return Contact
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+        return $this;
+    }
 
     /**
      * @return int

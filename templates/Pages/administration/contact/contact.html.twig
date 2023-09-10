@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration - Contact{% endblock %}
+
+{% block body %}
+
+        <h2 class="text-center mb-3" > nouveau message <span class="badge bg-danger">{{ nbNewContact }}</span></h2>
+        {% if not lstNewContact is same as([]) %}
+            {% set lstData = lstNewContact %}
+            {% include 'partials/Tableau/ContactTableau.html.twig' %}
+        {% else %}
+            <div class="alert alert-primary" role="alert">
+                il n'y a pas de nouveau message
+            </div>
+        {% endif %}
+        <h2 class="text-center mb-3"> gestion message conctact </h2>
+
+
+        {% if not lstContact is same as([]) %}
+            {% set lstData = lstContact %}
+            {% include 'partials/Tableau/ContactTableau.html.twig' %}
+        {% else %}
+            <div class="alert alert-primary" role="alert">
+                il n'y a pas de  message
+            </div>
+        {% endif %}
+{% endblock %}

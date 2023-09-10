@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration- nouveau - contact{% endblock %}
+
+{% block body %}
+   <h2>contact</h2>
+   {% if contact is defined %}
+
+      <div class="card">
+         <div class="card-header">
+               {{ contact.nom }} {{  contact.prenom ?? '' }}
+               {% if (contact.etat == 'nouveau') %}
+                  <span class="badge text-bg-success">Nouveau</span>
+               {% elseif contact.etat == 'traitement' %}
+                  <span class="badge text-bg-warning">traitement</span>
+               {% endif %}
+         </div>
+         <div class="card-body">
+            <h5 class="card-title">addresse email : {{ contact.adressEmail }}</h5>
+            <h5 class="card-title">tel: {{ contact.numeroTelephone }}</h5>
+            <p class="card-text">message : {{ contact.message }}</p>
+            <a href={{ path('modif_etat',{id:contact.id, etat:'lu'}) }}  class="btn btn-primary" >Marquer comme lu</a>
+            <a href={{ path('modif_etat',{id:contact.id, etat:'traitement'}) }} class="btn btn-info" >Marquer en Traitement</a>
+         </div>
+      </div>
+   {% endif %}
+{% endblock %}

@@ -26,6 +26,7 @@ for($i=0; $i<= 50; $i++)
     $avis1->setNom($faker->lastName())
         ->setCommentaire($faker->realText(155))
         ->setNote($faker->numberBetween(1,5))
+        ->setPublier($faker->randomElements(['modifier','verifier','nouveau']))
         ->setAdressEmail($faker->email());
     $Tavis->addAvis($avis1);
     $Tavis->getAllAvis();
@@ -38,6 +39,7 @@ for($i=0;$i<=50;$i++)
     $contact->setNom($faker->lastName())
         ->setPrenom($faker->firstName())
         ->setAdressEmail($faker->email())
+        ->setEtat($faker->randomElements(['nouveau', 'lu','traitement']))
         ->setMessage($faker->realText(155))
         ->setNumeroTelephone($faker->phoneNumber());
     $Tcontact->addContact($contact);

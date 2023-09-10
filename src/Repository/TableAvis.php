@@ -43,10 +43,11 @@ class TableAvis
           $id =   $this->Tidentifiant->addIdentifiant($avis->getNom(),$avis->getAdressEmail());
           $avis->setIdentifiantId($id);
         }
-        $req = $this->bdd->prepare("INSERT INTO avis SET identifiant_id = :id , commentaire = :com , note = :note");
+        $req = $this->bdd->prepare("INSERT INTO avis SET identifiant_id = :id , commentaire = :com , note = :note , status= :status");
         $req->bindValue('id',$avis->getIdentifiantId(),\PDO::PARAM_INT);
         $req->bindValue('com',$avis->getCommentaire(),\PDO::PARAM_STR);
         $req->bindValue('note',$avis->getNote(),\PDO::PARAM_INT);
+        $req->bindValue('status',$avis->getPublier(),\PDO::PARAM_STR);
         $req->execute();
         $avis->setId($this->bdd->lastInsertId());
         if(!$req){throw new \Exception("insertion avis n'a pas reussit !!!");}

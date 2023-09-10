@@ -18,11 +18,20 @@
             <div class="dropdown my-2 my-sm-0">
                 <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Administration
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                99+
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
                 </button>
                 <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="{{ path('admin_avis') }}">Avis</a></li>
                     <li><a class="dropdown-item {{ adminUsedCar ?? "" }}" href="{{ path('usedCar.view') }}">voiture d'occassion</a></li>
-                    <li><a class="dropdown-item" href="#">Contact</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_admin_contact') }}">Contact
+                            <span id ="countContact" class="badge rounded-pill text-bg-danger ms-2"></span>
+                            <script>
+                                var routeCountContact = "{{ path('count.contact')}}";
+                            </script>
+                        </a></li>
                     <li><a class="dropdown-item" href="#">Service</a></li>
 
                     {% if is_granted('ROLE_DIRECTEUR')  %}
