@@ -23,6 +23,7 @@ class AdminContactController extends AbstractController
     public function index(): Response
     {
         $lstContact = $this->Tcontact->getAllContact();
+
         $lstNewContact = array_filter($lstContact , function($contact){
             if($contact->getEtat()== 'nouveau') return true;
         });

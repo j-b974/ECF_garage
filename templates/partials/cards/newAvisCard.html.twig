@@ -1,0 +1,22 @@
+{% for avis in lstNewAvis %}
+<div class="col-lg-3  card mb-3 ms-2">
+    <div class="card-header">
+       #{{ avis.id}} {{ avis.nom }} {{  avis.prenom ?? '' }}
+        {% if (avis.status == 'nouveau') %}
+            <span class="badge text-bg-success ms-3">Nouveau</span>
+        {% elseif avis.status != 'nouveau' %}
+            <span class="badge text-bg-warning">{{ avis.status }}</span>
+        {% endif %}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Addresse email : {{ avis.adressEmail }}</h5>
+        <p class="card-text">Message : {{ avis.commentaire }}</p>
+        <p class="card-text">Note : {{ avis.note}}</p>
+
+        <a href="{{ path('publie_avis',{id: avis.id}) }}"  class="btn btn-primary" data-status="verifier" data-publish data-token="{{ csrf_token('publish'~avis.id) }}" > Publier</a>
+        <a href="{{ path('update_avis',{id:avis.id}) }}" class="btn btn-warning" >Modifier</a>
+        <a href="{{ path('delete_avis',{id:avis.id}) }}" class="btn btn-danger" data-delete data-token="{{ csrf_token('delete'~avis.id) }}" title="Attention la suppression sera definitive!!!" >Supprimer</a>
+
+    </div>
+</div>
+{% endfor %}

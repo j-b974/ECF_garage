@@ -4,7 +4,16 @@
 
 {% block body %}
 
-    <h1 class="text-center mb-4"> gestion des Avis</h1>
+    <h2 class="text-center mb-3"> nouveau avis </h2>
+
+    {% if not lstNewAvis is same as([]) %}
+    <div class="row justify-content-center">
+        {% include 'partials/Cards/newAvisCard.html.twig' %}
+    </div>
+    {%  else%}
+        <div class="alert alert-info "> il n'y a pas de nouveau Avis !</div>
+    {% endif %}
+    <h2 class="text-center mb-4"> gestion des Avis</h2>
 
     <p><a class="btn btn-info" href={{ path('create_avis') }}>Ajouter une Avis</a></p>
     {% if not lstAvis is same as([]) %}
@@ -12,4 +21,7 @@
     {% else %}
         <h4>il n'y a pas de Avis !!!</h4>
     {% endif %}
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/managerAvis.js')}}" defer ></script>
 {% endblock %}

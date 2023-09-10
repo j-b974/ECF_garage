@@ -62,7 +62,7 @@ class TableAvis
     public function getAvisById(int $id):Avis
     {
 
-        $req = $this->bdd->query("SELECT * ,identifiant.nom , identifiant.adress_email FROM avis 
+        $req = $this->bdd->query("SELECT avis.id ,avis.identifiant_id, avis.commentaire, avis.note , avis.status ,identifiant.nom , identifiant.adress_email FROM avis 
             LEFT JOIN identifiant ON identifiant_id = identifiant.id
             WHERE avis.id=$id ");
         $req->setFetchMode(\PDO::FETCH_CLASS, Avis::class);
@@ -71,9 +71,10 @@ class TableAvis
     }
     public function updateAvis(Avis $avis):Avis
     {
-        $req = $this->bdd->prepare("UPDATE avis SET commentaire= :comm , note= :note WHERE id = :id LIMIT 1");
+        $req = $this->bdd->prepare("UPDATE avis SET commentaire= :comm , note= :note , status= :publish WHERE id = :id LIMIT 1");
         $req->bindValue('note',$avis->getNote(),\PDO::PARAM_INT);
         $req->bindValue('comm',$avis->getCommentaire(),\PDO::PARAM_STR);
+        $req->bindValue('publish',$avis->getStatus(),\PDO::PARAM_STR);
         $req->bindValue('id',$avis->getId(), \PDO::PARAM_INT);
         $req->execute();
         if(!$req){ throw new \Exception('Update AVis non reussit !!!');
@@ -91,5 +92,13 @@ class TableAvis
         $id = $avis instanceof Avis ? $avis->getId() : $avis;
         $req = $this->bdd->query("DELETE FROM avis WHERE id = $id LIMIT 1");
         if(!$req){throw new \Exception("la suppréssion ne c'est pas éffectuée !!!");}
+    }
+    public function getCountNewAvis():int
+    {
+        $query = "SELECT count(id) FROM avis WHERE status = :newn";
+        $req = $this->bdd->prepare($query);
+        $req->bindValue('newn','nouveau',\PDO::PARAM_STR);
+        $req->execute();
+        return $req->fetchColumn();
     }
 }

@@ -13,23 +13,23 @@ class Avis
     protected $nom;
     protected $adress_email;
     #[Assert\Choice(['modifier','verifier','nouveau'])]
-    protected $publier = 'nouveau';
+    protected $status = 'nouveau';
 
     /**
      * @return string
      */
-    public function getPublier(): string
+    public function getStatus(): string
     {
-        return $this->publier;
+        return $this->status;
     }
 
     /**
      * @param string $publier
      * @return Avis
      */
-    public function setPublier(string $publier): Avis
+    public function setStatus(string $publier): Avis
     {
-        $this->publier = $publier;
+        $this->status = $publier;
         return $this;
     }
 

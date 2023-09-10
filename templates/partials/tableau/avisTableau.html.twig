@@ -16,7 +16,7 @@
         <td>{{ avis.commentaire }}</td>
         <td>{{ avis.note }}</td>
         <td><a class="btn btn-warning" href={{ path('update_avis',{ id: avis.id }) }}> modifier</a></td>
-        <td><a class="btn btn-danger" href="{{ path('delete_avis', { id:avis.id }) }}" title="Attention la suppression sera definitive!!!"> supprimer</a></td>
+        <td><a href="{{ path('delete_avis',{id:avis.id}) }}" class="btn btn-danger" data-delete data-token="{{ csrf_token('delete'~avis.id) }}" title="Attention la suppression sera definitive!!!" >Supprimer</a></td>
     </tr>
     {% endfor %}
     </tbody>

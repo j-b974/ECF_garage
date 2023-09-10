@@ -7,16 +7,19 @@ use App\Form\AvisType;
 use App\Repository\DataBaseGarage;
 use App\Repository\TableAvis;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/admin/avis')]
 class AdminAvisController extends AbstractController
 {
+    private  $Tavis ;
     public function __construct()
     {
-
+        $this->Tavis = new TableAvis(DataBaseGarage::connection());
     }
     /**
      * Vue initiale
@@ -25,12 +28,17 @@ class AdminAvisController extends AbstractController
     #[Route('/', name: 'admin_avis',methods: ['GET','POST'])]
     public function index(): Response
     {
-        $bdd = DataBaseGarage::connection();
-        $Tavis = new TableAvis($bdd);
-        $lstAvis = $Tavis->getAllAvis();
+        $lstAvis = $this->Tavis->getAllAvis();
+        $lstNewAvis = array_filter($lstAvis, function($avis){
+            if($avis->getStatus() == 'nouveau') return true;
+        });
+        $lstAvis = array_filter($lstAvis , function($avis){
+            if($avis->getStatus()!= 'nouveau') return true;
+        });
         return $this->render('Pages/administration/AvisAdmin.html.twig', [
             'adminAvis' => 'active',
-            'lstAvis'=>$lstAvis
+            'lstAvis'=>$lstAvis,
+            'lstNewAvis'=>$lstNewAvis
         ]);
     }
 
@@ -67,16 +75,15 @@ class AdminAvisController extends AbstractController
     #[Route('/Modification/{id}',name:'update_avis',methods:['GET','POST'])]
     public function update(Request $request, $id):Response
     {
-        $bdd = DataBaseGarage::connection();
-        $Tavis = new TableAvis($bdd);
-        $avis = $Tavis->getAvisById($id);
+
+        $avis = $this->Tavis->getAvisById($id);
 
         $form = $this->createForm(AvisType::class,$avis);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-            $Tavis->updateAvis($avis);
+            $this->Tavis->updateAvis($avis);
             $this->addFlash('succes',
                 " l'Avis #{$form->getData()->getId()} a était modifier avec succée !!!");
             return $this->redirectToRoute('admin_avis');
@@ -93,16 +100,46 @@ class AdminAvisController extends AbstractController
      * @return Response
      * @throws \Exception
      */
-    #[Route('/Suppression/{id}',name:'delete_avis',methods: ['GET'])]
-    public function delete($id):Response
+    #[Route('/Suppression/{id}',name:'delete_avis',methods: ['DELETE'])]
+    public function delete($id , Request $request):JsonResponse
     {
-        $bdd = DataBaseGarage::connection();
-        $Tavis = new TableAvis($bdd);
-        $Tavis->delecte($id);
-        $this->addFlash('succes',
-            " l'Avis #$id a était supprimer avec succée !!!");
+        $avis = $this->Tavis->getAvisById($id);
+        $data = json_decode($request->getContent(),true);
 
-        return $this->redirectToRoute('admin_avis');
+        if(isset($data['_token']) && $this->isCsrfTokenValid('delete'.$avis->getId(), $data['_token']) ) {
+
+            $this->Tavis->delecte($id);
+            return new JsonResponse(['success'=>true,'message'=> "l'avis #$id a bien était supprimé !"],200);
+
+
+        }
+        return new JsonResponse(["error"=> "token non valide !!!"],401);
+    }
+
+    #[Route('/publier/{id}', name:'publie_avis', methods: ['POST'])]
+    public function publish($id , ValidatorInterface $validator , Request $request ):JsonResponse
+    {
+        $avis = $this->Tavis->getAvisById( (int) $id);
+        if(!$avis){ return new JsonResponse(['error'=> 'identification incorrecte !!! '],401 );}
+        $data = json_decode($request->getContent(),true);
+        // verification du token
+        if(isset($data['_token']) && $this->isCsrfTokenValid('publish'.$avis->getId(), $data['_token']) ) {
+            $avis->setStatus($data['_status']);
+            // verification des données
+            if ($validator->validate($avis)) {
+
+                $this->Tavis->updateAvis($avis);
+                return new JsonResponse(['success'=> true,'message'=> " l'Avis #{$avis->getId()} a bien était publier !!!"]);
+            }
+            return new JsonResponse(['error'=> json_encode($avis)],401 );
+        }
+        return new JsonResponse(['error'=> 'token non valide'],401 );
+    }
+    #[Route('/nombre_New',name:'count.avis',methods: ['GET'])]
+    public function countAvis ():JsonResponse
+    {
+        $count = $this->Tavis->getCountNewAvis();
+        return new JsonResponse(['nbCountAvis'=>$count],200);
     }
 
 }
