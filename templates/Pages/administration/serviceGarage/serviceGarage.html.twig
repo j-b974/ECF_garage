@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminServiceController!{% endblock %}
+
+{% block body %}
+  <h1 class="text-center mb-3">service du garage</h1>
+  <p ><a href="{{ path('add_service') }}" class="btn btn-primary"> Rajouter un nouveau Service</a></p>
+{% for key , lstService in lstTitre  %}
+  <div class="card w-50 m-auto mb-4 ">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h5 >{{ key }}</h5>
+      <div class="">
+        <a href="{{ path('modifier_service',{titre : key} ) }}" class="btn btn-warning">modifier</a>
+        <a class="btn btn-danger" href="{{ path('delete_service',{titre:key}) }}"data-titre ="{{ key }}" data-delete data-token="{{ csrf_token('delete') }}" title="Attention la suppression sera definitive!!!"> supprimer</a>
+
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
+{% block javascripts %}
+  <script src="{{ asset('asset/js/serviceDelete.js')}}" defer ></script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title %}Modification de Service{% endblock %}
+
+{% block body %}
+    <h1 class="text-center mb-4 mt-4">
+        Modification du service
+    </h1>
+    <form method="post" class="card mb-4 w-50 m-auto" id="card">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-danger text-white" id="basic-addon1">Titre</span>
+            </div>
+            <input type="text" class="form-control"  required name ="titre" value="{{lstService[0].titre}}" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        {% for service in lstService %}
+            <hr id="hr{{ service.id }}" >
+            <div class="d-flex justify-content-end" > <button class=" me-3 rounded-circle text-danger" delete ="{{ service.id }}" type="button"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="card-body " id="card{{ service.id }}">
+
+            <div class="d-flex flex-column">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-dark text-white" id="basic-addon1">nom service</span>
+                    </div>
+                    <input type="text" name ="nomService[{{ service.id }}]"  value ="{{ service.nomService }}" class="form-control" placeholder="nom service" aria-label="Username" aria-describedby="basic-addon1" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-dark text-white" id="basic-addon1">label Prix</span>
+                    </div>
+                    <input type="text" name ="labelPrix[{{ service.id }}]" value="{{ service.labelPrix }}" class="form-control" placeholder="34€/heure" aria-label="Username" aria-describedby="basic-addon1" required>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+        <div> <button class=" mb-3 ms-3 rounded-circle " id="btnAjoute" type="button"><i class="fa-solid fa-plus"></i></button></div>
+        <button type="submit" class="btn btn-dark"> Modifier </button>
+    </form>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/ajouteService.js')}}" defer ></script>
+{% endblock %}
+

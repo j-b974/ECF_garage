@@ -1,4 +1,6 @@
 <?php
+
+use App\Entity\Service;
 use \App\Repository\DataBaseGarage;
 
 require dirname(__DIR__).'/vendor/autoload.php';
@@ -26,7 +28,7 @@ for($i=0; $i<= 50; $i++)
     $avis1->setNom($faker->lastName())
         ->setCommentaire($faker->realText(155))
         ->setNote($faker->numberBetween(1,5))
-        ->setPublier($faker->randomElements(['modifier','verifier','nouveau']))
+        ->setStatus($faker->randomElement(['modifier','verifier','nouveau']))
         ->setAdressEmail($faker->email());
     $Tavis->addAvis($avis1);
     $Tavis->getAllAvis();
@@ -39,12 +41,20 @@ for($i=0;$i<=50;$i++)
     $contact->setNom($faker->lastName())
         ->setPrenom($faker->firstName())
         ->setAdressEmail($faker->email())
-        ->setEtat($faker->randomElements(['nouveau', 'lu','traitement']))
+        ->setEtat($faker->randomElement(['nouveau', 'lu','traitement']))
         ->setMessage($faker->realText(155))
         ->setNumeroTelephone($faker->phoneNumber());
     $Tcontact->addContact($contact);
     $rep = $Tcontact->getAllContact();
 }
+// creation de service de garage
+$service = new Service();
+$Tservice = new \App\Repository\TableService($bdd);
+
+$service->setNomService('voiture')
+    ->setLabelPrix('95€/10km')
+    ->setTitre('depannage');
+
 // creation utilisateur
 
 echo PHP_EOL.'le hash des passWord va prend quelque instant  !!!';

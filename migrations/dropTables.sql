@@ -7,3 +7,4 @@ DROP TABLE IF EXISTS caracteristique_voiture CASCADE;
 DROP TABLE IF EXISTS image_voiture CASCADE ;
 DROP TABLE IF EXISTS voiture_occassion CASCADE;
 DROP TABLE IF EXISTS service_garage;
+DROP TABLE IF EXISTS titre_service CASCADE ;

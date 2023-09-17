@@ -82,9 +82,21 @@ CREATE TABLE IF NOT EXISTS caracteristique_voiture (
         ON UPDATE RESTRICT
     )ENGINE=InnoDB;
 
+CREATE TABLE IF NOT EXISTS titre_service(
+    titre varchar(125) PRIMARY KEY
+)ENGINE=InnoDB;
+
 CREATE TABLE IF NOT EXISTS service_garage(
-    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    nom_service VARCHAR(255) NOT NULL UNIQUE
+    id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+    titre varchar(125) NOT NULL ,
+    nom_service VARCHAR(255) NOT NULL ,
+    label_Prix VARCHAR(125) NOT NULL ,
+    PRIMARY KEY (id),
+    CONSTRAINT  fk_titre
+    FOREIGN KEY (titre)
+    REFERENCES titre_service (titre)
+        ON DELETE CASCADE
+        ON UPDATE RESTRICT
 )ENGINE=InnoDB;
 
 CREATE TABLE IF NOT EXISTS image_voiture(

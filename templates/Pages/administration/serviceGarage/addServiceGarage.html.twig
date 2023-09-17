@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}Ajouter de Service{% endblock %}
+
+{% block body %}
+<h1 class="text-center mb-4">
+    rajouter un service
+</h1>
+    <form method="post" class="card mb-4 w-50 m-auto" id="card">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text bg-danger text-white" id="basic-addon1">titre</span>
+            </div>
+            <input type="text" class="form-control"  value="{{ app.request.get('titre') }}" required name ="titre" aria-label="Username" aria-describedby="basic-addon1">
+        </div>
+        <div class="card-body ">
+            <div class="d-flex flex-column">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-dark text-white" id="basic-addon1">nom service</span>
+                    </div>
+                    <input type="text" name ="nomService[]" class="form-control" placeholder="nom service" aria-label="Username" aria-describedby="basic-addon1" required>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-dark text-white" id="basic-addon1">label Prix</span>
+                    </div>
+                    <input type="text" name ="labelPrix[]" class="form-control" placeholder="34€/heure" aria-label="Username" aria-describedby="basic-addon1" required>
+                </div>
+            </div>
+        </div>
+        <div> <button class=" mb-3 ms-3 rounded-circle " id="btnAjoute" type="button"><i class="fa-solid fa-circle-plus"></i> </button></div>
+        <button type="submit" class="btn btn-dark"> Rajouter </button>
+    </form>
+
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('asset/js/ajouteService.js')}}" defer ></script>
+{% endblock %}
+

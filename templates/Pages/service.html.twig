@@ -4,6 +4,19 @@
 
 {% block body %}
 
-    <h1 class="text-center mt-4">Service du garage </h1>
+    <h1 class="text-center mt-4 mb-4">Service du garage </h1>
+    {% for titre, card in lstTitre %}
+    <div class="card mb-4 w-50 m-auto" >
+        <h5 class="card-header">{{ titre }}</h5>
+        <div class="card-body">
+            {% for service in card %}
+                <div class="d-flex justify-content-between">
+                <h5 class="card-title">{{ service.nomService }}</h5>
+                <p class="card-text">{{ service.labelPrix }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
 
 {% endblock %}
