@@ -44,4 +44,20 @@ class TableIdentifiant
         $rep = $req->fetch(PDO::FETCH_ASSOC);
        return $rep['COUNT(adress_email)'] == '0' ? false : $rep;
     }
+    public function updateIdentifiant( int $id ,string $nom , string $email , ?string $prenom= '')
+    {
+        $query ="UPDATE identifiant SET nom = :nom , adress_email = :email, prenom = :prenom
+                WHERE id = :id LIMIT 1";
+        $req = $this->bdd->prepare($query);
+        $req->bindValue('id', $id, PDO::PARAM_INT);
+        $req->bindValue('nom',$nom, PDO::PARAM_STR);
+        $req->bindValue('email',$email,PDO::PARAM_STR);
+        $req->bindValue('prenom',$prenom, PDO::PARAM_STR);
+        $req->execute();
+    }
+    public function deleteIdentifiant(int $id)
+    {
+        $req = $this->bdd->query("DELETE FROM identifiant WHERE id = $id LIMIT 1");
+        $req->execute();
+    }
 }

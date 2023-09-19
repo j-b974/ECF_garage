@@ -11,7 +11,7 @@
       <h5 >{{ key }}</h5>
       <div class="">
         <a href="{{ path('modifier_service',{titre : key} ) }}" class="btn btn-warning">modifier</a>
-        <a class="btn btn-danger" href="{{ path('delete_service',{titre:key}) }}"data-titre ="{{ key }}" data-delete data-token="{{ csrf_token('delete') }}" title="Attention la suppression sera definitive!!!"> supprimer</a>
+        <a class="btn btn-danger" href="{{ path('delete_service',{titre:key}) }}" data-titre ="{{ key }}" data-delete data-token="{{ csrf_token('delete') }}" title="Attention la suppression sera definitive!!!"> supprimer</a>
 
       </div>
     </div>

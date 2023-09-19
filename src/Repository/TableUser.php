@@ -46,5 +46,29 @@ class TableUser
         $req->setFetchMode(PDO::FETCH_CLASS, user::class);
         return $req->fetch();
     }
+    public function getAllUser():array
+    {
+        $query ="SELECT user.role , user.password, user.identifiant_id, user.password , identifiant.id , identifiant.nom , identifiant.prenom,
+                identifiant.adress_email FROM user 
+                LEFT JOIN identifiant ON user.identifiant_id = identifiant.id";
+        $req = $this->bdd->prepare($query);
+        $req->execute();
+        $req->setFetchMode(PDO::FETCH_CLASS , User::class);
+        return $req->fetchAll();
+    }
+    public function updateUser(User $user)
+    {
+        $this->Tidentifiant->updateIdentifiant( $user->getIdentifiantId() ,$user->getNom() ,$user->getAdressEmail() , $user->getPrenom());
+
+        $query ="UPDATE user SET password = :word WHERE identifiant_id = :id";
+        $req = $this->bdd->prepare($query);
+        $req->bindValue('word',$user->getPassword(), PDO::PARAM_STR);
+        $req->bindValue('id',$user->getIdentifiantId(),PDO::PARAM_INT);
+        $req->execute();
+    }
+    public function deleteUser(User $user)
+    {
+        $this->Tidentifiant->deleteIdentifiant($user->getIdentifiantId());
+    }
 
 }
