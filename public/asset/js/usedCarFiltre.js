@@ -2,6 +2,7 @@ let rangeMin = 10;
 //let range = document.querySelector(".range-selected");
 const rangeInput = document.querySelectorAll(".range-input input");
 const rangePrice = document.querySelectorAll(".range-price input");
+const paginator = document.querySelector("#pagination");
 let minPrix , maxPrix ,minKm , maxKm ,minDate ,maxDate;
 rangeInput.forEach((input) => {
     input.addEventListener("input", function(e)  {
@@ -72,7 +73,9 @@ function addUsedCar( viewPage , data){
 
     let div = document.createElement('div');
     div.className = "col-md-4";
+
     let { prix , kilometrage , anneeFabrication , pathImage} = data;
+
     div.innerHTML =`
         <div class="card mb-3" style= "max-width: 540px;">
             <div class="row">
@@ -100,13 +103,14 @@ btnValid.addEventListener('click',e=>{
     let attribut = '?minPrix='+minPrix+'&maxPrix='+maxPrix+
         '&minKm='+minKm+'&maxKm='+maxKm+
         '&minDate='+minDate+'&maxDate='+maxDate;
-    console.log('pa',attribut)
+    //console.log('pa',attribut)
     fetch(btnValid.dataset.link+attribut)
         .then(reponse => reponse.json())
         .then(data =>{
-            console.log(data.dataUsedCar)
+            //console.log(data.dataUsedCar)
             viewPage.innerHTML ='';
             data.dataUsedCar.forEach(data =>{
+                supprimePaginator()
                 addUsedCar(viewPage ,JSON.parse(data));
             })
         })
@@ -141,7 +145,13 @@ function recupData(value ,element)
     }
 
 }
-
+function supprimePaginator()
+{
+    if(paginator)
+    {
+        paginator.remove();
+    }
+}
 
 
 

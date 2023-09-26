@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/Voiture/Occassion')]
 class UserCarsController extends AbstractController
 {
@@ -24,6 +25,7 @@ class UserCarsController extends AbstractController
     #[Route('/', name: 'usedCar')]
     public function index(PaginatorInterface $paginator , Request $request): Response
     {
+
         $param = $request->query->all();
         $param = array_filter($param,function($value){
             if((int) $value > 0) return (int) $value;
@@ -64,8 +66,8 @@ class UserCarsController extends AbstractController
                 ['dataUsedCar' => 'pas de donne !!!']
             );
         }
-        foreach($data as $dd){
-            $jsondata[] = json_encode($dd->jsonSerialize());
+        foreach($data as $useCAR){
+            $jsondata[] = json_encode($useCAR->jsonSerialize());
         }
         $dataPaste= json_encode($data[1]->jsonSerialize());
 

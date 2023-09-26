@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Security;
-
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,14 +18,11 @@ use Symfony\Component\Security\Http\Util\TargetPathTrait;
 class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
-
     public const LOGIN_ROUTE = 'app_login';
-
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
 
     }
-
     public function authenticate(Request $request): Passport
     {
         $adressEmail = $request->request->get('adress_email', '');
@@ -50,7 +46,7 @@ class UserAuthAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         // For example:
-         return new RedirectResponse($this->urlGenerator->generate('usedCar'));
+         return new RedirectResponse($this->urlGenerator->generate('app_admin_contact'));
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

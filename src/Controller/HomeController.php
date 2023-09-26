@@ -16,9 +16,14 @@ class HomeController extends AbstractController
         $bdd = DataBaseGarage::connection();
         $Tavis = new TableAvis($bdd);
         $lstAvis = $Tavis->getAllAvis();
+        $rand = array_rand($lstAvis , 5);
+        $lst=[];
+        foreach ($rand as $value){
+            $lst[] = $lstAvis[$value];
+        }
 
         return $this->render('/Pages/home.html.twig',
-        [ 'lstAvis'=>$lstAvis]);
+        [ 'lstAvis'=>$lst]);
     }
 
 }

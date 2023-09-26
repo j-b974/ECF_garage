@@ -37,3 +37,4 @@ function afficheSuccess(message)
 
     document.body.insertBefore(Ndiv , document.querySelector('div.container'))
 }
+console.log('avis chargé')

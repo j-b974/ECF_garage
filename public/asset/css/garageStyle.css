@@ -13,16 +13,16 @@
     background-color: #262526;
 }
 .range-selected.prix{
-    left:15%;
-    right:80%
+    left:6%;
+    right:6%
 }
 .range-selected.kilometrage{
     left:6%;
-    right:73%
+    right:6%
 }
 .range-selected.annee{
-    left:62%;
-    right:4%
+    left:6%;
+    right:6%
 }
 .range-input {
     position: relative;
@@ -72,4 +72,11 @@
 }
 .range-price input:first-of-type {
     margin-right: 15px;
+}
+
+.logo {
+    height: 60px;
+    width: 120px;
+    background-position: center;
+    background-size: cover;
 }

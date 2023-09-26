@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Entity\Service;
 use \App\Repository\DataBaseGarage;
 
@@ -7,16 +8,18 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 $bdd = DataBaseGarage::connection();
 
-echo 'debut de la création !!!';
+echo 'debut de la remplisage !!!';
 // creation de voiture occassion
 $Tcar = new \App\Repository\TableUsedCar($bdd);
 $faker = Faker\Factory::create('fr_FR');
+
 for($i=0;$i<= 50 ;$i++)
 {
     $car = new \App\Entity\UsedCar();
     $car->setPrix($faker->numberBetween(3,22)*1000)
         ->setKilometrage($faker->numberBetween(6 , 18)*10000)
         ->setAnneeFabrication($faker->dateTime()->format('Y-m-d'));
+
     $Tcar->addUserCar($car);
     $Tcar->getAllUserCar();
 }
@@ -48,12 +51,22 @@ for($i=0;$i<=50;$i++)
     $rep = $Tcontact->getAllContact();
 }
 // creation de service de garage
-$service = new Service();
-$Tservice = new \App\Repository\TableService($bdd);
 
-$service->setNomService('voiture')
-    ->setLabelPrix('95€/10km')
-    ->setTitre('depannage');
+for($i=0;$i<= 5 ; $i++)
+{
+    $Tservice = new \App\Repository\TableService($bdd);
+    $titre = $faker->word();
+    $Tservice->addTitreService($titre);
+    $nbServ = $faker->numberBetween(3 , 6);
+    for($ser= 0 ; $ser <= $nbServ ; $ser++)
+    {
+        $service = new Service();
+        $service->setTitre($titre)
+            ->setNomService($faker->word())
+            ->setLabelPrix($faker->numberBetween(15 , 45 ).'€/heure');
+        $Tservice->addService($service);
+    }
+}
 
 // creation utilisateur
 

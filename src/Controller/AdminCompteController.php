@@ -10,8 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/admin/compte')]
 class AdminCompteController extends AbstractController
 {
     private $Tuser;
@@ -19,10 +21,13 @@ class AdminCompteController extends AbstractController
     {
         $this->Tuser = new TableUser(DataBaseGarage::connection());
     }
-    #[Route('/admin/compte', name: 'app_admin_compte')]
+    #[Route('/', name: 'app_admin_compte')]
     public function index(): Response
     {
+        if($this->getUser()->getRole()!= 'Administrateur'){
 
+           return $this->redirectToRoute('app_admin_contact');
+        };
         $listUser = $this->Tuser->getAllUser();
 
         return $this->render('Pages/administration/compte/compte.html.twig', [
@@ -30,10 +35,13 @@ class AdminCompteController extends AbstractController
             'listUser' => $listUser
         ]);
     }
-    #[Route('/admin/Ajouter',name:'ajoute_compte',methods: ['GET','POST'])]
+    #[Route('/Ajouter',name:'ajoute_compte',methods: ['GET','POST'])]
 
-    public function ajouter(Request $request):Response
+    public function ajouter(Request $request, UserPasswordHasherInterface $hasher):Response
     {
+        if($this->getUser()->getRole()!= 'Administrateur'){
+            return  $this->redirectToRoute('app_admin_contact');
+        };
         $user = new User();
         $form = $this->createForm( UserFormType::class , $user);
 
@@ -42,7 +50,8 @@ class AdminCompteController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             if(!$this->Tuser->isUserExite($user)){
-
+                // hash password
+                $user->setPassword($hasher->hashPassword($user , $user->getPassword()));
                 $this->Tuser->addUser($user);
                 $this->addFlash('succes',
                     " Utilisateur  #{$user->getIdentifiantId()} a était ajouter avec succé !!!");
@@ -56,9 +65,12 @@ class AdminCompteController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
-    #[Route('/admin/modifier/{id}',name:'modifier_compte',methods: ['GET','POST'])]
-    public function modifier( $id , Request $request):Response
+    #[Route('/modifier/{id}',name:'modifier_compte',methods: ['GET','POST'])]
+    public function modifier( $id , Request $request, UserPasswordHasherInterface $hasher):Response
     {
+        if($this->getUser()->getRole()!= 'Administrateur'){
+            return  $this->redirectToRoute('app_admin_contact');
+        };
         $user = $this->Tuser->getUserById($id);
 
         $form = $this->createForm( UserFormType::class , $user);
@@ -67,6 +79,7 @@ class AdminCompteController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $user->setPassword($hasher->hashPassword($user , $user->getPassword()));
             $this->Tuser->updateUser($user);
             $this->addFlash('succes',
                 " Utilisateur  #{$user->getIdentifiantId()} a était Modifier avec succé !!!");
@@ -76,9 +89,12 @@ class AdminCompteController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
-    #[Route('/admin/supprime/{id}', name:'supprime_compte', methods: ['DELETE'])]
+    #[Route('/supprime/{id}', name:'supprime_compte', methods: ['DELETE'])]
     public function delete($id , Request $request):JsonResponse
     {
+        if($this->getUser()->getRole()!= 'Administrateur'){
+            return $this->redirectToRoute('app_admin_contact');
+        };
         $user = $this->Tuser->getUserById($id);
         $data = json_decode($request->getContent(),true);
 

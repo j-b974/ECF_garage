@@ -16,7 +16,6 @@
         <a href="{{ path('publie_avis',{id: avis.id}) }}"  class="btn btn-primary" data-status="verifier" data-publish data-token="{{ csrf_token('publish'~avis.id) }}" > Publier</a>
         <a href="{{ path('update_avis',{id:avis.id}) }}" class="btn btn-warning" >Modifier</a>
         <a href="{{ path('delete_avis',{id:avis.id}) }}" class="btn btn-danger" data-delete data-token="{{ csrf_token('delete'~avis.id) }}" title="Attention la suppression sera definitive!!!" >Supprimer</a>
-
     </div>
 </div>
 {% endfor %}

@@ -16,7 +16,7 @@ class ServiceController extends AbstractController
 
         $Tservice = new TableService(DataBaseGarage::connection());
 
-        $lstTire = [];
+        $lstTitre = [];
         foreach( $Tservice->getAllTitreService() as $lstService)
         {
             $lstTitre[$lstService] = $Tservice->getAllServiceByTitre($lstService);

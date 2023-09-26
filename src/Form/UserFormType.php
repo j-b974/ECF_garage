@@ -46,12 +46,12 @@ class UserFormType extends AbstractType
                     new Assert\Choice(['Employ','Administrateur'])
                 ]
             ])
-            ->add('password',TextType::class,[
+            ->add('password',PasswordType::class,[
                 'constraints'=>[
                     new Assert\NotBlank(),
                     new Assert\Length(['min'=>8 , 'max'=>250])
                 ],
-                'required'=>false,
+
             ])
             ->add('submit',SubmitType::class,[
                 'attr'=>[

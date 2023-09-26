@@ -1,5 +1,5 @@
-let links = document.querySelectorAll("[data-delete]");
-links.forEach( link => {
+linksCon = document.querySelectorAll("[data-delete]");
+linksCon.forEach( link => {
     link.addEventListener('click', e=> {
         e.preventDefault();
         if(confirm('Attention la suppression sera definitive !!!')){
@@ -24,7 +24,6 @@ links.forEach( link => {
     })
 })
 
-console.log('elel',document.querySelector('div.container'));
 function afficheSuccess(message)
 {
 
@@ -35,6 +34,5 @@ function afficheSuccess(message)
                  ${message} 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>      
     `;
-
     document.body.insertBefore(Ndiv , document.querySelector('div.container'))
 }

@@ -31,22 +31,20 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // pour connaitre les paramettre du hash
         //dd($this->passwordHasher);
         $Tuser = new TableUser(DataBaseGarage::connection());
-
         $user = new User();
+
         $user->setAdressEmail($identifier);
         $isExite = $Tuser->isUserExite($user);
-        if($isExite)
-        {
-            $user = $Tuser->getUserById($isExite['id']) ?: $user ;
-            //dd($user);
-        }
-
-
-        return $user;
         // Load a User object from your data source or throw UserNotFoundException.
         // The $identifier argument is whatever value is being returned by the
         // getUserIdentifier() method in your User class.
-        //throw new \Exception('TODO: fill in loadUserByIdentifier() inside '.__FILE__);
+        if($isExite)
+        {
+            $user = $Tuser->getUserById($isExite['id']) ?: $user ;
+        }
+
+        return $user;
+
     }
 
     /**

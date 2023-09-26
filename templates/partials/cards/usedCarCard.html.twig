@@ -6,13 +6,16 @@
                 <div class="col-md-4">
                     <img src="{{ asset('image_voiture_occassion/'~car.lstImage[0].getPathImage) }}" class="img-fluid rounded-start" alt="...">
                 </div>
-                <div class="col-md-8 mb-4">
+                <div class="col-md-8">
                     <div class="card-body">
                         <h5 class="card-title">prix : {{ car.prix }}€</h5>
                         <p class="card-text">kilométrage : {{ car.kilometrage }}</p>
                         <p class="card-text">année de frabrication : {{ car.anneeFabrication|date('Y') }}</p>
                     </div>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-center">
+                <a href="#" class="btn btn-dark w-75"> Voir </a>
             </div>
         </div>
     </div>

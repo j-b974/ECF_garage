@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ConnectionController extends AbstractController
 {
-    #[Route('/con', name: 'connection',methods: ['GET','POST'])]
+    #[Route('null', name: 'connection',methods: ['GET','POST'])]
     public function index(): Response
     {
         return $this->render('Pages/connection.html.twig', [

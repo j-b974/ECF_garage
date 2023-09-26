@@ -1,10 +1,6 @@
 
-let nbContact = parseInt( localStorage.getItem('nbContact'));
-let nbAvis = parseInt(localStorage.getItem('nbAvis'));
-
-if(null != null){
-    affichecountContact(nbContact);
-}else{
+let nbContact =  localStorage.getItem('nbContact');
+let nbAvis = localStorage.getItem('nbAvis');
 
     fetch(routeCountContact,{
         method:"GET",
@@ -18,8 +14,8 @@ if(null != null){
         .then(data =>{
             localStorage.setItem('nbContact', data.nbContact);
           affichecountContact(data.nbContact)
+            afficheSommes(parseInt(nbAvis) + parseInt(data.nbContact));
         })
-}
 
 function affichecountContact(nb)
 {
@@ -33,12 +29,19 @@ function affichecountAvis(nb){
 }
 function afficheSommes(nb)
 {
+    console.log(nb);
     let span = document.querySelector('#countSomme')
     span.innerHTML = nb;
 }
-if(nbAvis == null)
+if(nbAvis == null || nbAvis)
 {
-    console.log('ici')
+    getCountAvis()
+}else{
+    affichecountAvis(nbAvis);
+}
+
+function getCountAvis()
+{
     fetch(routeCountAvis,{
         method:"GET",
         headers:{
@@ -51,8 +54,6 @@ if(nbAvis == null)
         .then(data =>{
             localStorage.setItem('nbAvis', data.nbCountAvis);
             affichecountAvis(data.nbCountAvis);
+            afficheSommes(parseInt(data.nbCountAvis) + parseInt(nbContact));
         })
-}else{
-    affichecountAvis(nbAvis);
 }
-afficheSommes(nbAvis + nbContact);

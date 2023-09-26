@@ -56,9 +56,13 @@ linksPublish.forEach( link => {
                     if(data.success){
                         link.parentElement.parentElement.remove();
                         afficheSuccess(data.message);
+                        updateCountAvis();
                     }else{
                         alert(data.error)
                     }
                 })
     })
 })
+function updateCountAvis(){
+    getCountAvis();
+}

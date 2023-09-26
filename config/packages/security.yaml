@@ -39,7 +39,7 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
             - { path: ^/connection, roles: PUBLIC_ACCESS }
             - { path: ^/admin/*, roles: [ROLE_EMPLOYER,ROLE_DIRECTEUR] }
-            - {path: ^/admin/creatCount/*, role: ROLE_DIRECTEUR}
+            - {path: ^/admin/compte/*, role: ROLE_DIRECTEUR}
 
 
 
