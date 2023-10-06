@@ -31,6 +31,14 @@ class UsedCar
         return $this->caracteristique;
     }
 
+    public function getArrayCaracteristique()
+    {
+        if($this->getCaracteristique()) {
+            return get_object_vars($this->getCaracteristique());
+        }
+        return [];
+    }
+
     /**
      * @param \App\Entity\CaracteristiqueCar $caracteristique
      * @return UsedCar
@@ -50,6 +58,14 @@ class UsedCar
     {
 
         return $this->option;
+    }
+    public function getArrayOption()
+    {
+        if($this->getOption()){
+            return get_object_vars($this->option ?? []);
+        }
+        return [];
+
     }
 
     /**

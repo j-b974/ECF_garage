@@ -4,9 +4,12 @@ namespace App\Services;
 
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 
 class HasherGarage
 {
+
     public static function hashUser()
     {
         return new UserPasswordHasher(new PasswordHasherFactory( [

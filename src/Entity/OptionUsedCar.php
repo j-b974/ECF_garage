@@ -5,9 +5,9 @@ namespace App\Entity;
 class OptionUsedCar
 {
     private $voiture_occassion_id;
-    private $gps;
-    private $radar_recule;
-    private $climatisation;
+    public $gps;
+    public $radar_recule;
+    public $climatisation;
 
     /**
      * @return mixed

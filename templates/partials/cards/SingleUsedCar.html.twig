@@ -1,0 +1,60 @@
+<main class="">
+    <section>
+        {% dump(UsedCar) %}
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-6 d-flex flex-column justify-content-around ">
+                    <div class="ps-3">
+                    <h5 class="card-title mb-3">Prix: {{ UsedCar.Prix }}€</h5>
+                    <h5 class="card-title mb-3">Kilométrage: {{ UsedCar.kilometrage }}km</h5>
+                    <h5 class="card-title mb-3">Année fabrication: {{ UsedCar.anneeFabrication|date('Y') }}</h5>
+                    </div>
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Caracteristique
+                        </div>
+                        <div class="card-body">
+                            {% for propertyName, propertyValue in UsedCar.getArrayCaracteristique%}
+
+                                <p class="card-text"> {{ propertyName }}: {{ propertyValue }} </p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header text-center">
+                            Option véhicule
+                        </div>
+                        <div class="card-body">
+                            {% for propertyName, propertyValue in UsedCar.getArrayOption %}
+                                {% if propertyValue  %}
+                                <p class="card-text"> {{ propertyName }}:  Oui </p>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                    <div id="carouselExample" class="carousel slide">
+                        <div class="carousel-inner">
+                            {% for image in UsedCar.lstImage %}
+                                <div class="carousel-item {{ (loop.first) ? 'active' : '' }}">
+                                    <img src="{{asset('image_voiture_occassion/'~image.getPathImage)}}" class="d-block w-100" alt="...">
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

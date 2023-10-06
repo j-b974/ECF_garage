@@ -6,11 +6,11 @@ class CaracteristiqueCar
 {
     private $voiture_occassion_id;
     #[Assert\Choice(['essence','diesel','electrique'])]
-    private $carburant;
+    public $carburant;
     #[Assert\Choice(['manuel','semi-auto','automatique'])]
-    private $boite_vitesse;
+    public $boite_vitesse;
     #[Assert\Choice([5,2,3])]
-    private $nombre_porte;
+    public $nombre_porte;
 
     /**
      * @return mixed

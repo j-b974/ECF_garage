@@ -19,36 +19,62 @@ for($i=0;$i<= 50 ;$i++)
     $car->setPrix($faker->numberBetween(3,22)*1000)
         ->setKilometrage($faker->numberBetween(6 , 18)*10000)
         ->setAnneeFabrication($faker->dateTime()->format('Y-m-d'));
+    // initialise les caracteeristique
+    $carCaracte = new \App\Entity\CaracteristiqueCar();
+    $carCaracte->setCarburant($faker->randomElement(['essence','diesel','electrique']))
+        ->setBoiteVitesse($faker->randomElement(['essence','diesel','electrique']))
+        ->setNombrePorte($faker->randomElement([2,3,5]));
+    $car->setCaracteristique($carCaracte);
+    // iniitalise les Option
+    $carOption = new \App\Entity\OptionUsedCar();
+    $carOption->setClimatisation($faker->randomElement([true , false]))
+        ->setGps($faker->randomElement([true , false]))
+        ->setRadarRecule($faker->randomElement([true , false]));
 
     $Tcar->addUserCar($car);
     $Tcar->getAllUserCar();
 }
 // creation d'avis
 $Tavis = new \App\Repository\TableAvis($bdd);
+
+// nombre de nouveau Avis à créé
+$newMessage = 3;
+
 for($i=0; $i<= 50; $i++)
 {
     $avis1 = new \App\Entity\Avis();
     $avis1->setNom($faker->lastName())
         ->setCommentaire($faker->realText(155))
         ->setNote($faker->numberBetween(1,5))
-        ->setStatus($faker->randomElement(['modifier','verifier','nouveau']))
+        ->setStatus($faker->randomElement(['modifier','verifier']))
         ->setAdressEmail($faker->email());
+    if($newMessage > 0){
+        $avis1->setStatus('nouveau');
+    }
     $Tavis->addAvis($avis1);
     $Tavis->getAllAvis();
+    $newMessage--;
 }
 // creation de contact
 $Tcontact = new \App\Repository\TableContact($bdd);
+
+// nombre de nouveau contact
+$newMessage = 5;
 for($i=0;$i<=50;$i++)
 {
     $contact = new \App\Entity\contact();
     $contact->setNom($faker->lastName())
         ->setPrenom($faker->firstName())
         ->setAdressEmail($faker->email())
-        ->setEtat($faker->randomElement(['nouveau', 'lu','traitement']))
+        ->setEtat($faker->randomElement(['lu','traitement']))
         ->setMessage($faker->realText(155))
         ->setNumeroTelephone($faker->phoneNumber());
+    if($newMessage > 0){
+        $contact->setEtat('nouveau');
+    }
     $Tcontact->addContact($contact);
     $rep = $Tcontact->getAllContact();
+    $newMessage--;
 }
 // creation de service de garage
 
