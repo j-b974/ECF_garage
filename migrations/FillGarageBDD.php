@@ -8,7 +8,7 @@ require dirname(__DIR__).'/vendor/autoload.php';
 
 $bdd = DataBaseGarage::connection();
 
-echo 'debut de la remplisage !!!';
+echo 'debut du remplissage !!!';
 // creation de voiture occassion
 $Tcar = new \App\Repository\TableUsedCar($bdd);
 $faker = Faker\Factory::create('fr_FR');
@@ -19,17 +19,20 @@ for($i=0;$i<= 50 ;$i++)
     $car->setPrix($faker->numberBetween(3,22)*1000)
         ->setKilometrage($faker->numberBetween(6 , 18)*10000)
         ->setAnneeFabrication($faker->dateTime()->format('Y-m-d'));
+
     // initialise les caracteeristique
     $carCaracte = new \App\Entity\CaracteristiqueCar();
     $carCaracte->setCarburant($faker->randomElement(['essence','diesel','electrique']))
-        ->setBoiteVitesse($faker->randomElement(['essence','diesel','electrique']))
+        ->setBoiteVitesse($faker->randomElement(['manuel','semi-auto','automatique']))
         ->setNombrePorte($faker->randomElement([2,3,5]));
     $car->setCaracteristique($carCaracte);
+
     // iniitalise les Option
     $carOption = new \App\Entity\OptionUsedCar();
     $carOption->setClimatisation($faker->randomElement([true , false]))
         ->setGps($faker->randomElement([true , false]))
         ->setRadarRecule($faker->randomElement([true , false]));
+    $car->setOption($carOption);
 
     $Tcar->addUserCar($car);
     $Tcar->getAllUserCar();
@@ -83,7 +86,7 @@ for($i=0;$i<= 5 ; $i++)
     $Tservice = new \App\Repository\TableService($bdd);
     $titre = $faker->word();
     $Tservice->addTitreService($titre);
-    $nbServ = $faker->numberBetween(3 , 6);
+    $nbServ = $faker->numberBetween(3 , 5);
     for($ser= 0 ; $ser <= $nbServ ; $ser++)
     {
         $service = new Service();
