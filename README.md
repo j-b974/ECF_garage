@@ -3,7 +3,7 @@ ECF en symfony 6 pour formation développeur web  promo  VITTI
 cloner le projet symfony 
 
 executer le fichier initTable.SQL qui se trouve dans  GarageWeb/migrations
-      >> pour initialiser les table
+      >> pour initialiser les tables
       
 dans le fichier .Env vous devrez initialise 3 varible selon votre Basse de donné
       >> GARAGE_DATABASE_URL="mysql:host=localhost;dbname=bddName" 
