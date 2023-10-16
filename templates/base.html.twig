@@ -19,7 +19,11 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
+    <body class="para"
+       {% if image_fond is defined %}
+            style="background-image: url('{{ asset('image/'~image_fond) }}');"
+        {%  endif %}
+     >
         {% block header %}
             {% include 'partials/navs/nav.html.twig' %}
         {% endblock %}
@@ -35,7 +39,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
-        <div class="container min-vh-100">
+        <div class="container">
             {% block body %}{% endblock %}
         </div>
         {% block footer %}

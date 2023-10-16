@@ -1,3 +1,11 @@
+.para{
+    background-image: url('../../image/logo.png');
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
 .range-slider {
     height: 5px;
     position: relative;
@@ -73,10 +81,36 @@
 .range-price input:first-of-type {
     margin-right: 15px;
 }
-
 .logo {
     height: 60px;
     width: 120px;
     background-position: center;
     background-size: cover;
+}
+/* ================  scrollbar garage  ===================  */
+
+/* Modifier la largeur de la barre de défilement */
+::-webkit-scrollbar {
+    width: 7px; /* Largeur de la barre de défilement */
+}
+
+/* Modifier l'apparence de la poignée (thumb) */
+::-webkit-scrollbar-thumb {
+    background-color: red; /* Couleur de la poignée */
+    border-radius: 5px; /* Bordures arrondies de la poignée */
+}
+
+/* Modifier l'apparence de la piste (track) */
+::-webkit-scrollbar-track {
+    background-color: darkslategrey; /* Couleur de la piste */
+}
+
+/* Modifier l'apparence de l'angle supérieur droit (coin) */
+::-webkit-scrollbar-corner {
+    background-color: transparent; /* Couleur du coin */
+}
+
+/* Modifier l'apparence de la poignée de redimensionnement (resizer) */
+::-webkit-resizer {
+    background-color: transparent; /* Couleur de la poignée de redimensionnement */
 }

@@ -23,8 +23,10 @@ class HomeController extends AbstractController
             $lst[] = $lstAvis[$value];
         }
 
-        return $this->render('/Pages/home.html.twig',
-        [ 'lstAvis'=>$lst]);
+        return $this->render('/Pages/home.html.twig', [
+            'lstAvis'=>$lst,
+            'image_fond'=> 'acceuilGarage2.jpg'
+        ]);
     }
 
 }

@@ -19,7 +19,8 @@ class SingleUsedCarController extends AbstractController
         return $this->render('Pages/SingleUsedCar.html.twig', [
             'usedCar' => 'active',
             'UsedCar'=> $usedCar,
-            'id' => $id
+            'id' => $id ,
+            'image_fond'=> 'acceuilGarage.jpg'
         ]);
     }
 }

@@ -179,7 +179,6 @@ class AdminUsedCarController extends AbstractController
     public function deleteUsedCar($id, Request $request):JsonResponse
     {
         $usedCar = $this->TusedCar->getUsedCarById($id);
-
         // recupere les donne de la requette
         $data = json_decode($request->getContent(),true);
 
@@ -192,7 +191,6 @@ class AdminUsedCarController extends AbstractController
              }catch (\PDOException $e){
                 return new JsonResponse(['error'=> 'la suppression c’est mal passé !!!'],400);
         }
-
             return new JsonResponse(['success'=>'peu continue'],400);
         }
         return new JsonResponse(['error'=>'Token non valide !!!'],400);

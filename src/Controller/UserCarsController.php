@@ -39,6 +39,7 @@ class UserCarsController extends AbstractController
 
         return $this->render('Pages/usedCar.html.twig', [
             'usedCar' => 'active',
+            'image_fond'=>'parking.jpg',
             'minPrix' => $this->TusedCar->getMinim('prix'),
             'maxPrix'=>$this->TusedCar->getMaximun('prix'),
             'minKm'=>$this->TusedCar->getMinim('kilometrage'),

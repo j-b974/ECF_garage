@@ -25,6 +25,7 @@ class ServiceController extends AbstractController
         return $this->render('Pages/service.html.twig', [
             'service' => 'active',
             'lstTitre'=> $lstTitre,
+            'image_fond'=> 'serviceGarage.jpg'
         ]);
     }
 }
