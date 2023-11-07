@@ -190,10 +190,11 @@ class UsedCar
     }
     public function jsonSerialize(){
         return [
+            'id'=>$this->getId(),
             'prix' => $this->getPrix(),
             'anneeFabrication'=> $this->getAnneeFabrication()->format('Y'),
             'kilometrage'=> number_format($this->getKilometrage(), 0,'',' '),
-            'pathImage'=>'https://127.0.0.1:8001/image_voiture_occassion/'.$this->getLstImage()[0]->getPathImage()
+            'pathImage'=>'https://127.0.0.1:8000/image_voiture_occassion/'.$this->getLstImage()[0]->getPathImage()
         ];
     }
     public function getRandomImage()
