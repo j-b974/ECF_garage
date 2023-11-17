@@ -73,6 +73,13 @@ class TableUsedCar
         $this->hydrateEtityFollowUpdate($car);
 
     }
+    public function isExiteVoitureOccassionID(int $id):bool
+    {
+        $query = "SELECT COUNT(*) FROM voiture_occassion WHERE voiture_occassion.id = ? ";
+        $req = $this->bdd->prepare($query);
+        $req->execute([$id]);
+        return (bool) $req->fetchColumn();
+    }
     public function getUsedCarById(int $id):UsedCar
     {
         $query ="SELECT voiture_occassion.* 

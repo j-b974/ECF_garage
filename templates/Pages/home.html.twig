@@ -1,6 +1,9 @@
 {% extends "base.html.twig" %}
 {% block title %} V.Parrot Garage - Acceuil{% endblock %}
 {% block body %}
-    <h1 class="text-center mt-4 mb-4">Garage V.Parrot</h1>
+    <header class="vh-home d-flex justify-content-center align-items-center">
+        <h1 class="text-center text-white">Garage V.Parrot</h1>
+    </header>
+
     {% include 'partials/cards/AvisCard.html.twig' %}
 {% endblock %}

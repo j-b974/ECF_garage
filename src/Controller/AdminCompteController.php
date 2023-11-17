@@ -65,12 +65,17 @@ class AdminCompteController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
-    #[Route('/modifier/{id}',name:'modifier_compte',methods: ['GET','POST'])]
+    #[Route('/modifier/{id<\d+>}',name:'modifier_compte',methods: ['GET','POST'])]
     public function modifier( $id , Request $request, UserPasswordHasherInterface $hasher):Response
     {
         if($this->getUser()->getRole()!= 'Administrateur'){
             return  $this->redirectToRoute('app_admin_contact');
         };
+        if(!$this->Tuser->isExiteUserById($id))
+        {
+            return $this->redirectToRoute('error_id',[],302);
+        }
+
         $user = $this->Tuser->getUserById($id);
 
         $form = $this->createForm( UserFormType::class , $user);
@@ -89,12 +94,16 @@ class AdminCompteController extends AbstractController
             'form'=> $form->createView()
         ]);
     }
-    #[Route('/supprime/{id}', name:'supprime_compte', methods: ['DELETE'])]
+    #[Route('/supprime/{id<\d+>}', name:'supprime_compte', methods: ['DELETE'])]
     public function delete($id , Request $request):JsonResponse
     {
         if($this->getUser()->getRole()!= 'Administrateur'){
             return $this->redirectToRoute('app_admin_contact');
         };
+        if(!$this->Tuser->isExiteUserById($id))
+        {
+            return new JsonResponse(['error'=> 'identifiante introuvable']);
+        }
         $user = $this->Tuser->getUserById($id);
         $data = json_decode($request->getContent(),true);
 

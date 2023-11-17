@@ -10,10 +10,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SingleUsedCarController extends AbstractController
 {
-    #[Route('/Voiture-Occassion/{id}', name: 'app_single_used_car')]
+    #[Route('/Voiture-Occassion/{id<\d+>}', name: 'app_single_used_car')]
     public function index($id): Response
     {
         $TusedCar = new TableUsedCar(DataBaseGarage::connection());
+        if(!$TusedCar->isExiteVoitureOccassionID($id))
+        {
+            return $this->redirectToRoute('error_id',[],302);
+        }
         $usedCar = $TusedCar->getUsedCarById($id);
 
         return $this->render('Pages/SingleUsedCar.html.twig', [

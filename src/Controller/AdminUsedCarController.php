@@ -102,9 +102,14 @@ class AdminUsedCarController extends AbstractController
         );
     }
 
-    #[Route('/Modier/{id}', name: 'usedCar.update', methods: ['GET', 'POST'])]
+    #[Route('/Modier/{id<\d+>}', name: 'usedCar.update', methods: ['GET', 'POST'])]
     public function Update($id , Request $request, ImageFormat $imageFormat) : Response
     {
+        if(!$this->TusedCar->isExiteVoitureOccassionID($id))
+        {
+            return $this->redirectToRoute('error_id',[],302);
+        }
+
         $usedCar = $this->TusedCar->getUsedCarById($id);
         $option = $usedCar->getOption() ?? new OptionUsedCar();
         $caracte = $usedCar->getCaracteristique() ?? new CaracteristiqueCar();
@@ -156,7 +161,7 @@ class AdminUsedCarController extends AbstractController
             'fromCaract' => $formCarat->createView(),
         ]);
     }
-    #[Route('/Supprime/image/{id}', name:'image.delete',methods: ['DELETE'])]
+    #[Route('/Supprime/image/{id<\d+>}', name:'image.delete',methods: ['DELETE'])]
     public function deleteImage($id , Request $request, ImageFormat $imageFormat):JsonResponse
     {
         $Timg = new TableImageCar(DataBaseGarage::connection());
@@ -175,9 +180,14 @@ class AdminUsedCarController extends AbstractController
         }
         return new JsonResponse(['error'=>'token non valide' ],400);
     }
-    #[Route('Supprime/{id}',name:'usedCar.delete', methods: ['DELETE'])]
+    #[Route('Supprime/{id<\d+>}',name:'usedCar.delete', methods: ['DELETE'])]
     public function deleteUsedCar($id, Request $request):JsonResponse
     {
+        // vérifie si id est en bdd
+        if(!$this->TusedCar->isExiteVoitureOccassionID($id))
+        {
+            return new JsonResponse(['error'=> 'l\'identification est introuvable !!!'],400);
+        }
         $usedCar = $this->TusedCar->getUsedCarById($id);
         // recupere les donne de la requette
         $data = json_decode($request->getContent(),true);

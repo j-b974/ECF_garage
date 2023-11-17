@@ -59,6 +59,13 @@ class TableAvis
         $id = $this->Tidentifiant->isEmailExite($avis->getAdressEmail());
         return $id;
     }
+    public function isExiteAvisId(int $id):bool
+    {
+        $query = "SELECT COUNT(*) FROM avis WHERE avis.id = ?";
+        $req = $this->bdd->prepare($query);
+        $req->execute([$id]);
+        return (bool) $req->fetchColumn();
+    }
     public function getAvisById(int $id):Avis
     {
 

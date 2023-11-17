@@ -1,5 +1,6 @@
 .para{
-    background-image: url('../../image/logo.png');
+    background-image: linear-gradient(180deg,rgba(0,0,0,0.87) 0%,rgba(0,0,0,0.6) 100%),
+    url('../../image/logo.png');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -87,11 +88,17 @@
     background-position: center;
     background-size: cover;
 }
+.vh-75 {
+    min-height: calc(100vh - 86px);
+}
+.vh-home{
+    min-height: calc(100vh - 86px);
+}
 /* ================  scrollbar garage  ===================  */
 
 /* Modifier la largeur de la barre de défilement */
 ::-webkit-scrollbar {
-    width: 7px; /* Largeur de la barre de défilement */
+    width: 5px; /* Largeur de la barre de défilement */
 }
 
 /* Modifier l'apparence de la poignée (thumb) */

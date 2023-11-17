@@ -1,5 +1,5 @@
-<div class="d-flex justify-content-center">
-    <form class="col-md-4 " method="post" >
+<div class="vh-100 d-flex justify-content-center align-items-center">
+    <form class="col-md-4 bg-danger " method="post" >
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}

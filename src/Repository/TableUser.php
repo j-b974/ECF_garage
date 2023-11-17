@@ -38,6 +38,13 @@ class TableUser
     {
         return $this->Tidentifiant->isEmailExite($user->getAdressEmail());
     }
+    public function isExiteUserById(int $id): bool
+    {
+        $query= "SELECT COUNT(*) FROM identifiant WHERE identifiant.id = ?";
+        $req = $this->bdd->prepare($query);
+        $req->execute([$id]);
+        return (bool) $req->fetchColumn();
+    }
     public function getUserById(int $id):bool|User
     {
         $req = $this->bdd->query("SELECT  user.role , user.identifiant_id, user.password, identifiant.nom , identifiant.prenom, identifiant.adress_email FROM user 

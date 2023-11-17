@@ -88,6 +88,13 @@ class TableContact
     {
         $req = $this->bdd->query("DELETE FROM contact WHERE id = {$contact->getId()} LIMIT 1");
     }
+    public function isContactExite(int $id):bool
+    {
+        $query = "SELECT COUNT(*) FROM contact WHERE id = ?";
+        $req = $this->bdd->prepare($query);
+        $req->execute([$id]);
+        return (bool) $req->fetchColumn();
+    }
 
 
 }

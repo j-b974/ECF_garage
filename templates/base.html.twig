@@ -21,7 +21,8 @@
     </head>
     <body class="para"
        {% if image_fond is defined %}
-            style="background-image: url('{{ asset('image/'~image_fond) }}');"
+            style="background-image: linear-gradient(180deg,rgba(0,0,0,0.87) 0%,rgba(0,0,0,0.6) 100%),
+                    url('{{ asset('image/'~image_fond) }}');"
         {%  endif %}
      >
         {% block header %}
@@ -39,7 +40,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         {% endfor %}
-        <div class="container">
+        <div class="container vh-75">
             {% block body %}{% endblock %}
         </div>
         {% block footer %}

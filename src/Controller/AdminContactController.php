@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Events\Dispatched\ErrorProduits;
 use App\Repository\DataBaseGarage;
 use App\Repository\TableContact;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class AdminContactController extends AbstractController
 {
     private $Tcontact;
-    public function __construct()
+    public function __construct(private EventDispatcherInterface $dispatcher)
     {
         $this->Tcontact = new TableContact(DataBaseGarage::connection());
     }
@@ -40,9 +42,20 @@ class AdminContactController extends AbstractController
             'nbNewContact'=>$countContact
         ]);
     }
-    #[Route('/{id}', name:'single_contact', methods:['GET','POST']) ]
+    #[Route('/{id<\d+>}', name:'single_contact', methods:['GET','POST']) ]
     public function singleContact($id):Response
     {
+        if(!$this->Tcontact->isContactExite($id))
+        {
+            // event personaliser créer
+            $errorId = new ErrorProduits($id);
+            // composant symfony qui propage l'evenement
+            $this->dispatcher->dispatch(
+                $errorId,
+                ErrorProduits::ERROR_ID_EVENT
+            );
+            return $this->redirectToRoute('error_id');
+        }
         $contact = $this->Tcontact->getContactById((int) $id);
 
         return $this->render('Pages/administration/contact/singleContact.html.twig',[
@@ -69,7 +82,7 @@ class AdminContactController extends AbstractController
         $count = $this->Tcontact->getCountNewContact();
         return new JsonResponse(['nbContact'=>$count],200);
     }
-    #[Route('/suppression/{id}',name:'supprime.contact', methods: ['DELETE'])]
+    #[Route('/suppression/{id<\d+>}',name:'supprime.contact', methods: ['DELETE'])]
     public function deletContact($id , Request $request):JsonResponse
     {
         $contact = $this->Tcontact->getContactById($id);
