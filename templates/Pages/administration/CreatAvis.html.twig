@@ -8,8 +8,8 @@
         }
     </style>
 
-    <h1 class="text-center mb-4"> Création d' un Avis</h1>
-    <div class="formWidth m-auto">
+    <h1 class="text-center text-white mb-4"> Création d' un Avis</h1>
+    <div class="formWidth text-white m-auto">
         {{ form_start(AvisForm) }}
         <div class="my-custom-class-for-errors">
             {{ form_errors(AvisForm) }}
@@ -35,7 +35,6 @@
                 </div>
             </div>
             {{ form_row(AvisForm.submit) }}
-        </div>
     </div>
     {{ form_end(AvisForm) }}
 {% endblock %}

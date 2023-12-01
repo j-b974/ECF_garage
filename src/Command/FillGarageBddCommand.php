@@ -28,7 +28,7 @@ class FillGarageBddCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
 
-        $process = new Process(['php',dirname(__DIR__,2, ).'/migrations/FillGarageBDD.php']);
+        $process = new Process(['php',dirname(__DIR__,2, ).'/migrations/iniTableGarage.php']);
 
         $process->run();
         //$_ENV['GARAGE_DATABASE_URL'],$_ENV['GARAGE_DATABASE_USER'],$_ENV['GARAGE_DATABASE_PASSWORD'

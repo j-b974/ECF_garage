@@ -1,11 +1,11 @@
 .para{
+
+    min-height: 100vh;
     background-image: linear-gradient(180deg,rgba(0,0,0,0.87) 0%,rgba(0,0,0,0.6) 100%),
     url('../../image/logo.png');
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    height: 100vh;
 }
 .range-slider {
     height: 5px;

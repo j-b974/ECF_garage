@@ -22,7 +22,8 @@
     <body class="para"
        {% if image_fond is defined %}
             style="background-image: linear-gradient(180deg,rgba(0,0,0,0.87) 0%,rgba(0,0,0,0.6) 100%),
-                    url('{{ asset('image/'~image_fond) }}');"
+                    url('{{ asset('image/'~image_fond) }}');
+                    background-size: cover"
         {%  endif %}
      >
         {% block header %}

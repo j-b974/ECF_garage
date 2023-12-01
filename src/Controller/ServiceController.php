@@ -14,6 +14,8 @@ class ServiceController extends AbstractController
     public function index(): Response
     {
 
+        $bdd = DataBaseGarage::connection();
+        $bdd->exec('CREATE TABLE IF NOT EXISTS option_voiture(titre varchar(255) NOT NULL)');
         $Tservice = new TableService(DataBaseGarage::connection());
 
         $lstTitre = [];

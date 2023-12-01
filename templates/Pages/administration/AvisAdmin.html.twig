@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <h2 class="text-center mb-3"> nouveau avis </h2>
+    <h2 class="text-center text-white mb-3"> nouveau avis </h2>
 
     {% if not lstNewAvis is same as([]) %}
     <div class="row justify-content-center">
@@ -13,7 +13,7 @@
     {%  else%}
         <div class="alert alert-info "> il n'y a pas de nouveau Avis !</div>
     {% endif %}
-    <h2 class="text-center mb-4"> gestion des Avis</h2>
+    <h2 class="text-center text-white mb-4"> gestion des Avis</h2>
 
     <p><a class="btn btn-info" href={{ path('create_avis') }}>Ajouter une Avis</a></p>
     {% if not lstAvis is same as([]) %}

@@ -1,21 +1,58 @@
-version: '3'
+version: '3.8'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-15}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+  web:
+    image: image_garage
+    env_file:
+      - .env
+    ports:
+      - "8000:80"
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - .:/var/www/
+    depends_on:
+      - db
+    networks:
+      - dev
+  db:
+    image: mysql:latest
+    container_name: db_garage_ecf
+    restart: always
+    volumes:
+      # espace memoire pour mysql
+      - db-data:/var/lib/mysql
+      # ajoute les fichier certif en le ssl container
+      - ./certificatBdd:/etc/mysql/ssl
+    command: --ssl-key=/etc/mysql/ssl/server-key.pem --ssl-cert=/etc/mysql/ssl/server-cert.pem --ssl-ca=/etc/mysql/ssl/ca-cert.pem
+    environment:
+      MYSQL_ROOT_PASSWORD: garage1234
+      MYSQL_DATABASE: ecfgarage
+      MYSQL_USER: admin_garage
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    networks:
+      - dev
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: admin_bd_garage
+    environment:
+      PMA_HOST: db
+      PMA_USER: admin_garage
+      PMA_PASSWORD: 1234
+    restart: always
+    volumes:
+      #- ./PhpMyAdminConfig/config.inc.php:/etc/phpmyadmin/config.inc.php
+      - ./certificatBdd:/etc/mysql/ssl
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
 
+    networks:
+      - dev
 volumes:
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
+  db-ssl:
+  db-data:
+
+networks:
+  dev:

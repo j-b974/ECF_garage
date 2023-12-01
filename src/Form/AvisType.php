@@ -60,7 +60,7 @@ class AvisType extends AbstractType
                 ],
                 'required' => true,
                 'label_attr'=>[
-                    'class'=>'form-check-label'
+                    'class'=>'form-check-label me-4'
                 ],
                 'label'=>'Attribuez une Note :',
                 'constraints'=>[

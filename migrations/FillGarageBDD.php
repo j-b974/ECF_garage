@@ -2,7 +2,7 @@
 
 
 use App\Entity\Service;
-use \App\Repository\DataBaseGarage;
+use App\Repository\DataBaseGarage;
 
 require dirname(__DIR__).'/vendor/autoload.php';
 
