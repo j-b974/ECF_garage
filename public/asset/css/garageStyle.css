@@ -94,6 +94,39 @@
 .vh-home{
     min-height: calc(100vh - 86px);
 }
+
+/* ================  ranking   ===================  */
+
+.rating:not(:checked) > input {
+    position: absolute;
+    appearance: none;
+}
+.rating:not(:checked) > label {
+    float: right;
+    cursor: pointer;
+    font-size: 21px;
+    color: #666;
+}
+.rating:not(:checked) > label:before {
+    content: '★';
+}
+.rating > input:checked + label:hover,
+.rating > input:checked + label:hover ~ label,
+.rating > input:checked ~ label:hover,
+.rating > input:checked ~ label:hover ~ label,
+.rating > label:hover ~ input:checked ~ label {
+    color: #e58e09;
+}
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
+    color: #ff9e0b;
+}
+.rating > input:checked ~ label {
+    color: #ffa723;
+}
+
+/* ================  ranking   ===================  */
+
 /* ================  scrollbar garage  ===================  */
 
 /* Modifier la largeur de la barre de défilement */
@@ -121,3 +154,4 @@
 ::-webkit-resizer {
     background-color: transparent; /* Couleur de la poignée de redimensionnement */
 }
+
