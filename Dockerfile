@@ -9,15 +9,26 @@ RUN apt-get update \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
+        libwebp-dev \
         libonig-dev \
         libzip-dev \
         unzip \
         git \
         curl \
+        imagemagick \
+        libmagickwand-dev --no-install-recommends \
         libpq-dev
 
 # Installation des extensions PHP nécessaires
 RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+
+# Installer l'extension GD
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
+    && docker-php-ext-install -j$(nproc) gd
+
+# Installer l'extension Imagick
+RUN pecl install imagick
+RUN docker-php-ext-enable imagick
 
 # Installation de Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

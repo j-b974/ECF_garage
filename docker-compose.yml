@@ -2,11 +2,16 @@ version: '3.8'
 
 services:
   web:
+    build:
+      dockerfile: Dockerfile
     image: image_garage
     env_file:
       - .env
     ports:
       - "8000:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.your_app.rule=Host(`195.35.2.151/home`)"
     volumes:
       - .:/var/www/
     depends_on:
@@ -30,6 +35,9 @@ services:
       MYSQL_PASSWORD: 1234
     ports:
       - "3306:3306"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.your_app.rule=Host(`195.35.2.151/bdd`)"
     networks:
       - dev
   phpmyadmin:

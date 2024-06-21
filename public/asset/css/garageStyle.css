@@ -1,5 +1,4 @@
 .para{
-
     min-height: 100vh;
     background-image: linear-gradient(180deg,rgba(0,0,0,0.87) 0%,rgba(0,0,0,0.6) 100%),
     url('../../image/logo.png');
@@ -154,4 +153,8 @@
 ::-webkit-resizer {
     background-color: transparent; /* Couleur de la poignée de redimensionnement */
 }
-
+/*  form-card  */
+.formcard{
+    max-width: 350px;
+    border-radius: 5px;
+}
