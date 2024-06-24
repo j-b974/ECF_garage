@@ -34,5 +34,5 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
-            cd $APP_PATH
+            cd ${{ secrets.VPS_DIRECTORY }}
             docker compose up -d

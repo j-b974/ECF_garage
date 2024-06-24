@@ -5,7 +5,7 @@ ENV APACHE_DOCUMENT_ROOT=/var/www/public
 
 # Installation des dépendances nécessaires
 RUN apt-get update \
-    && apt-get install -y \
+    && apt-get install -y --fix-missing\
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libpng-dev \
