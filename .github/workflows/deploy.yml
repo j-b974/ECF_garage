@@ -30,11 +30,12 @@ jobs:
       - name: Deploy the new image
         uses: appleboy/ssh-action@master
         env:
-          PATH_DIRECTORY: APP_PATH
+          PATH_DIRECTORY: ${{ secrets.VPS_DIRECTORY }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
             cd $PATH_DIRECTORY
+            ls -al
             docker compose up -d
