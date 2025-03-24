@@ -1,3 +1,20 @@
+# Étape 1 : Utiliser l'image Node.js 18 pour construire les assets front-end
+FROM node:18 AS node_build
+
+# Définir le répertoire de travail pour Node.js selon la structure réelle du projet
+WORKDIR /var/www/public
+
+# Copier les fichiers nécessaires pour l'installation des dépendances Node.js
+COPY ./public/package.json ./public/package-lock.json ./
+
+# Installer les dépendances Node.js
+RUN npm install
+
+# Copier les fichiers source du front-end nécessaires pour le build
+COPY ./public ./
+
+# lance le build ici
+
 # Utiliser une image PHP officielle avec Apache
 FROM php:8.2-apache
 # Configuration de l'environnement
@@ -35,15 +52,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN composer --version
 
-# Installation de Node.js et npm
-#RUN apt-get update \
-    #&& apt-get install -yq nodejs npm
-
 # Configuration Apache
 RUN a2enmod rewrite
 
 # Copie des fichiers de l'application dans le conteneur
 COPY . /var/www/
+
+# Copier les assets construits depuis l'étape node_build
+COPY --from=node_build /var/www/public ./public
 
 # remplace la configuration de apache
 COPY ./ServerGarage.conf /etc/apache2/sites-available/000-default.conf
