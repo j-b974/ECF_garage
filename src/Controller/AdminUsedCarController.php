@@ -53,9 +53,10 @@ class AdminUsedCarController extends AbstractController
         $option = new OptionUsedCar();
         $caracte = new CaracteristiqueCar();
 
+        $typeOption = ['label_btn'=>"Ajouter"];
 
         // init les form lie au class
-        $form = $this->createForm(UsedCarType::class, $usedCar);
+        $form = $this->createForm(UsedCarType::class, $usedCar,$typeOption);
         $formOption = $this->createForm(OptionUsedCarType::class, $option);
         $formCarat = $this->createForm(CaracterisqueCarType::class, $caracte);
 
@@ -114,8 +115,10 @@ class AdminUsedCarController extends AbstractController
         $option = $usedCar->getOption() ?? new OptionUsedCar();
         $caracte = $usedCar->getCaracteristique() ?? new CaracteristiqueCar();
 
+        $typeOption = ['label_btn'=>"Modifier"];
+
         // init les form lie au class
-        $form = $this->createForm(UsedCarType::class, $usedCar);
+        $form = $this->createForm(UsedCarType::class, $usedCar, $typeOption);
         $formOption = $this->createForm(OptionUsedCarType::class, $option);
         $formCarat = $this->createForm(CaracterisqueCarType::class, $caracte);
 

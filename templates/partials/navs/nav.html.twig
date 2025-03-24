@@ -46,9 +46,9 @@
                 {% endif %}
             </div>
             {% if app.user %}
-                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_logout') }}>Déconnection</a>
+                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_logout') }}>Déconnexion</a>
             {% else %}
-                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_login') }}>Connection</a>
+                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_login') }}>Connexion</a>
             {% endif %}
         </div>
     </div>

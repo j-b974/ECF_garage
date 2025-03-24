@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\OptionUsedCar;
+use App\Entity\UsedCar;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -30,7 +31,8 @@ class UsedCarType extends AbstractType
             ])
             ->add('annee_fabrication',DateType::class,[
                 'widget' => 'choice',
-                'format'=>"dd / MM / yyyy"
+                'format'=>"dd / MM / yyyy",
+                'years'=>range(date('Y'),1975,)
             ])
             ->add('kilometrage',IntegerType::class,[
                 'constraints'=>[
@@ -72,7 +74,7 @@ class UsedCarType extends AbstractType
                 'attr'=>[
                     'class'=>' d-flex btn btn-info mt-4 ms-auto'
                 ],
-                'label'=>'Ajouter'
+                'label'=>$options['label_btn']
             ])
 
         ;
@@ -81,6 +83,8 @@ class UsedCarType extends AbstractType
     {
         $resolver->setDefaults([
             // Configure your form options here
+            "data_class"=>UsedCar::class,
+            "label_btn"=>"Envoyer"
         ]);
     }
 

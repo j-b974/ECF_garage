@@ -15,7 +15,7 @@ linksCon.forEach( link => {
                 .then(data =>{
                     if(data.success){
                         link.parentElement.parentElement.remove();
-                        afficheSuccess(data.message);
+                        //afficheSuccess(data.message);
                     }else{
                         alert(data.error);
                     }

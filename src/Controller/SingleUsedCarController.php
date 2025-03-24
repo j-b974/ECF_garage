@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\DataBaseGarage;
+use App\Repository\MongoGarage;
 use App\Repository\TableUsedCar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +19,11 @@ class SingleUsedCarController extends AbstractController
         {
             return $this->redirectToRoute('error_id',[],302);
         }
+
+        // récupere la voiture d'occassion
         $usedCar = $TusedCar->getUsedCarById($id);
+        //====== recupere les vue de la voiture occassion =========
+
 
         return $this->render('Pages/SingleUsedCar.html.twig', [
             'usedCar' => 'active',

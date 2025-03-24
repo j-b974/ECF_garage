@@ -1,3 +1,6 @@
+
+
+
 let links = document.querySelectorAll("[data-delete]");
 links.forEach( link => {
     link.addEventListener('click', e=> {
@@ -16,6 +19,7 @@ links.forEach( link => {
                     if(data.success){
                         link.parentElement.parentElement.remove();
                         afficheSuccess(data.message);
+                        deleteRow(link);
                     }else{
                         alert(data.error);
                     }
@@ -26,7 +30,6 @@ links.forEach( link => {
 
 function afficheSuccess(message)
 {
-
     Ndiv = document.createElement('div');
     Ndiv.className = 'text-center alert alert-success alert-dismissible fade show position-sticky';
     Ndiv.setAttribute('role','alert');
@@ -34,7 +37,5 @@ function afficheSuccess(message)
                  ${message} 
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>      
     `;
-
     document.body.insertBefore(Ndiv , document.querySelector('div.container'))
 }
-console.log('avis chargé')

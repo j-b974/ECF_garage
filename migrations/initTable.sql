@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS identifiant (
     id       INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
     nom        VARCHAR(255) NOT NULL,
@@ -6,7 +5,6 @@ CREATE TABLE IF NOT EXISTS identifiant (
     adress_email VARCHAR(255) NOT NULL UNIQUE,
     PRIMARY KEY (id)
 ) ENGINE=InnoDB ;
-
 
 CREATE TABLE IF NOT EXISTS avis (
     id INT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -110,3 +108,4 @@ CREATE TABLE IF NOT EXISTS image_voiture(
             ON DELETE CASCADE
             ON UPDATE RESTRICT
 )ENGINE=InnoDB;
+ALTER TABLE caracteristique_voiture CONVERT TO CHARACTER SET utf8_mb4_unicode_ci COLLATE utf8_general_ci;

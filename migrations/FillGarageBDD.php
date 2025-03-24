@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Entity\Service;
 use App\Repository\DataBaseGarage;
 
@@ -13,7 +12,7 @@ echo 'debut du remplissage !!!';
 $Tcar = new \App\Repository\TableUsedCar($bdd);
 $faker = Faker\Factory::create('fr_FR');
 
-for($i=0;$i<= 50 ;$i++)
+for($i=0;$i<= 20 ;$i++)
 {
     $car = new \App\Entity\UsedCar();
     $car->setPrix($faker->numberBetween(3,22)*1000)
@@ -41,9 +40,9 @@ for($i=0;$i<= 50 ;$i++)
 $Tavis = new \App\Repository\TableAvis($bdd);
 
 // nombre de nouveau Avis à créé
-$newMessage = 3;
+$newMessage = 2;
 
-for($i=0; $i<= 50; $i++)
+for($i=0; $i<= 5; $i++)
 {
     $avis1 = new \App\Entity\Avis();
     $avis1->setNom($faker->lastName())
@@ -62,8 +61,8 @@ for($i=0; $i<= 50; $i++)
 $Tcontact = new \App\Repository\TableContact($bdd);
 
 // nombre de nouveau contact
-$newMessage = 5;
-for($i=0;$i<=50;$i++)
+$newMessage = 2;
+for($i=0;$i<=10;$i++)
 {
     $contact = new \App\Entity\contact();
     $contact->setNom($faker->lastName())
@@ -81,7 +80,7 @@ for($i=0;$i<=50;$i++)
 }
 // creation de service de garage
 
-for($i=0;$i<= 5 ; $i++)
+for($i=0;$i<= 2 ; $i++)
 {
     $Tservice = new \App\Repository\TableService($bdd);
     $titre = $faker->word();
@@ -100,6 +99,7 @@ for($i=0;$i<= 5 ; $i++)
 // creation utilisateur
 
 echo PHP_EOL.'le hash des passWord va prend quelque instant  !!!';
+
 $Tuser = new \App\Repository\TableUser($bdd);
 $admin = new \App\Entity\User();
 $admin->setNom('super')
@@ -111,7 +111,7 @@ $admin->setNom('super')
         'admin'
     ));
 $Tuser->addUser($admin);
-for($i=0;$i<=50 ; $i++)
+for($i=0;$i<=10 ; $i++)
 {
     $user = new \App\Entity\User();
     $user->setNom($faker->lastName())

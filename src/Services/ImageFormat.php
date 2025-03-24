@@ -39,6 +39,7 @@ class ImageFormat
         if(!$fichierInfos){
             throw new \Exception('image non Valide !!!');
         }
+
         // recupere le format de img
         switch ($fichierInfos['mime'])
         {
@@ -50,6 +51,7 @@ class ImageFormat
                 break;
             case 'image/webp':
                 $imgSource = imagecreatefromwebp($img);
+                break;
             default :
                 throw new \Exception('creation image ressource non réussit !!!');
         }

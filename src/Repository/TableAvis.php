@@ -21,8 +21,11 @@ class TableAvis
      */
     public function getAllAvis():array
     {
-        $req  = $this->bdd->query("SELECT avis.* , identifiant.nom ,identifiant.adress_email FROM avis 
-                                    LEFT JOIN  identifiant ON avis.identifiant_id = identifiant.id");
+        $req  = $this->bdd->query(
+            "SELECT avis.* , identifiant.nom ,identifiant.adress_email 
+                    FROM avis 
+                    LEFT JOIN  identifiant 
+                    ON avis.identifiant_id = identifiant.id");
         $req-> setFetchMode(\PDO::FETCH_CLASS , Avis::class);
         $rep = $req->fetchAll();
         return $rep ;

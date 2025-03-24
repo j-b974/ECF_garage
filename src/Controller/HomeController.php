@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Repository\DataBaseGarage;
 use App\Repository\TableAvis;
 
+use App\Repository\TableUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,10 +18,17 @@ class HomeController extends AbstractController
         $bdd = DataBaseGarage::connection();
         $Tavis = new TableAvis($bdd);
         $lstAvis = $Tavis->getAllAvis();
-        $rand = array_rand($lstAvis , 5);
+
+        $lstAvis = array_filter($lstAvis, function ($avis){
+            return $avis->getStatus() != "nouveau";
+        });
+
+        $rand = array_rand($lstAvis , 3);
+        $Tuser = new TableUser($bdd);
+
         $lst=[];
         foreach ($rand as $value){
-            $lst[] = $lstAvis[$value];
+                $lst[] = $lstAvis[$value];
         }
 
         return $this->render('/Pages/home.html.twig', [

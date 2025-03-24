@@ -4,7 +4,8 @@
 {% block body %}
   <h1 class="text-center text-white"> gestion de compte </h1>
   <p><a class="btn btn-info" href="{{ path('ajoute_compte') }}">Ajouter une compte</a></p>
-  <table class="table table-striped">
+  <div class="m-auto tableauDestop">
+    <table class="table table-striped table-responsive text-center">
     <thead>
     <tr>
       <th scope="col">id</th>
@@ -31,6 +32,8 @@
     {% endfor %}
     </tbody>
   </table>
+  </div>
+  {% include 'Pages/administration/compte/tableauCompteGsm.html.twig' %}
 {% endblock %}
 {% block javascripts %}
   <script src="{{ asset('asset/js/deleteCompte.js')}}" defer ></script>

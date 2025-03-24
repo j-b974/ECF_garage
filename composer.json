@@ -40,7 +40,9 @@
         "symfony/web-link": "6.0.*",
         "symfony/yaml": "6.0.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^2.12|^3.0"
+        "twig/twig": "^2.12|^3.0",
+        "ext-pdo": "*",
+      "ext-gd": "*"
     },
     "config": {
         "allow-plugins": {
@@ -81,6 +83,7 @@
             "@auto-scripts"
         ],
         "post-update-cmd": [
+            "composer dump-autoload",
             "@auto-scripts"
         ]
     },

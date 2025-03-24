@@ -33,9 +33,11 @@ RUN docker-php-ext-enable imagick
 # Installation de Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+RUN composer --version
+
 # Installation de Node.js et npm
-RUN apt-get update \
-    && apt-get install -yq nodejs npm
+#RUN apt-get update \
+    #&& apt-get install -yq nodejs npm
 
 # Configuration Apache
 RUN a2enmod rewrite
@@ -46,13 +48,12 @@ COPY . /var/www/
 # remplace la configuration de apache
 COPY ./ServerGarage.conf /etc/apache2/sites-available/000-default.conf
 
+# Configuration du propriétaire des fichiers
+RUN chown -R www-data:www-data /var/www/
 # Installation des dépendances avec Composer
 
 RUN cd /var/www/ && \
-    composer install --no-scripts --no-interaction
-
-# Configuration du propriétaire des fichiers
-RUN chown -R www-data:www-data /var/www/
+composer update --no-interaction --no-ansi && composer install --no-interaction --no-ansi
 
 # change emplacement curseur commande
 WORKDIR /var/www/

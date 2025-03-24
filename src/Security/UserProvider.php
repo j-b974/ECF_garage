@@ -16,7 +16,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
+
     public function __construct(private UserPasswordHasherInterface $passwordHasher){
+
 
     }
     /**
@@ -30,6 +32,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         // pour connaitre les paramettre du hash
         //dd($this->passwordHasher);
+
         $Tuser = new TableUser(DataBaseGarage::connection());
         $user = new User();
 
@@ -38,10 +41,12 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         // Load a User object from your data source or throw UserNotFoundException.
         // The $identifier argument is whatever value is being returned by the
         // getUserIdentifier() method in your User class.
+
         if($isExite)
         {
             $user = $Tuser->getUserById($isExite['id']) ?: $user ;
         }
+
 
         return $user;
 

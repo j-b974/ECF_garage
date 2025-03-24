@@ -17,8 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminCompteController extends AbstractController
 {
     private $Tuser;
-    public function __construct()
-    {
+    public function __construct()    {
         $this->Tuser = new TableUser(DataBaseGarage::connection());
     }
     #[Route('/', name: 'app_admin_compte')]
@@ -35,9 +34,12 @@ class AdminCompteController extends AbstractController
             'listUser' => $listUser
         ]);
     }
-    #[Route('/Ajouter',name:'ajoute_compte',methods: ['GET','POST'])]
 
-    public function ajouter(Request $request, UserPasswordHasherInterface $hasher):Response
+    /**
+     * @throws \Exception
+     */
+    #[Route('/Ajouter',name:'ajoute_compte',methods: ['GET','POST'])]
+    public function ajouter(Request $request,UserPasswordHasherInterface $hasher):Response
     {
         if($this->getUser()->getRole()!= 'Administrateur'){
             return  $this->redirectToRoute('app_admin_contact');
@@ -107,9 +109,11 @@ class AdminCompteController extends AbstractController
         $user = $this->Tuser->getUserById($id);
         $data = json_decode($request->getContent(),true);
 
-        if(isset($data['_token']) && $this->isCsrfTokenValid('delete'.$user->getIdentifiantId(), $data['_token'])){
+        if(isset($data['_token']) &&
+            $this->isCsrfTokenValid('delete'.$user->getIdentifiantId(), $data['_token'])){
             $this->Tuser->deleteUser($user);
-            return new JsonResponse(['success'=> true , 'message' => "le compte {$user->getAdressEmail()} bien était supprimé !!!"]);
+            return new JsonResponse(['success'=> true ,
+                'message' => "le compte {$user->getAdressEmail()} bien était supprimé !!!"]);
         }
 
             return new JsonResponse(['error'=>'token non valide'],401);

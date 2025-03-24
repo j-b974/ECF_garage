@@ -127,7 +127,6 @@
 /* ================  ranking   ===================  */
 
 /* ================  scrollbar garage  ===================  */
-
 /* Modifier la largeur de la barre de défilement */
 ::-webkit-scrollbar {
     width: 5px; /* Largeur de la barre de défilement */
@@ -157,4 +156,21 @@
 .formcard{
     max-width: 350px;
     border-radius: 5px;
+}
+/* changement de strucure de table*/
+
+.tableauDestop{
+    display: block;
+}
+.tableauGsm{
+    display: none
+}
+@media (max-width: 750px) {
+    .tableauDestop{
+        display:none;
+    }
+    .tableauGsm{
+        display:block;
+
+    }
 }

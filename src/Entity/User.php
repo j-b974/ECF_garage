@@ -8,17 +8,11 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     protected $identifiant_id;
-
     protected $role = '';
-
     protected $password ='';
-
     protected $nom;
-
     protected $adress_email;
-
     protected $prenom;
-
     /**
      * @return string
      */

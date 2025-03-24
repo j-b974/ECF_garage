@@ -1,0 +1,25 @@
+<div class="table-responsive m-auto tableauGsm" style="max-width: 32rem;">
+    <table class="table table-striped table-bordered table-hover text-dark ">
+        <tbody>
+        {% for user in listUser %}
+        <tr>
+            <td >
+                <strong>Id: </strong>#{{ user.id }}<br>
+                <strong>Utilisateur: </strong>{{ user.nom }} {{ user.prenom ?? ''}}<br>
+                <strong>Adresse email: </strong>{{ user.adressEmail }}<br>
+                <strong>Role: </strong>{{ user.role }}<br>
+                <strong class="text-center">Action: </strong><br>
+            </td>
+        </tr>
+        <tr>
+            <td class="m-auto">
+                <a class="btn btn-warning" href="{{ path('modifier_compte',{id : user.getIdentifiantId}) }}"> modifier</a>
+                <a class="btn btn-danger" href="{{ path('supprime_compte',{id: user.getIdentifiantId}) }}"
+                   data-delete data-token="{{ csrf_token('delete'~user.getIdentifiantId) }}"
+                   title="Attention la suppression sera definitive!!!">Supprimer</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
