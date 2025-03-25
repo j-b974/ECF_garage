@@ -30,12 +30,8 @@ services:
       # espace memoire pour mysql
       - db-data:/var/lib/mysql
       # ajoute les fichier certif en le ssl container
-
-    environment:
-      MYSQL_ROOT_PASSWORD: garage1234
-      MYSQL_DATABASE: ecfgarage
-      MYSQL_USER: adminGarage
-      MYSQL_PASSWORD: 1234
+    env_file:
+      - .env.db
     ports:
       - "3306:3306"
     networks:
@@ -43,11 +39,8 @@ services:
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: admin_bd_garage
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 0
-      PMA_ABSOLUTE_URI: http://localhost/SQLmyAdmin/
+    env_file:
+      - .env.mydb
     ports:
       - "8080:80"
     restart: always
@@ -60,12 +53,9 @@ services:
     labels:
       - "traefik.enable=true"
       # Redirige les requêtes sur Host 'localhost' avec le chemin commençant par /SQLmyAdmin vers ce service
-      - "traefik.http.routers.phpmyadmin.rule=Host(`localhost`) && PathPrefix(`/SQLmyAdmin/`)"  # Règle de routage
-      - "traefik.http.routers.phpmyadmin.entrypoints=websecure"
+      - "traefik.http.routers.phpmyadmin.rule=Host(`mysql.bertil.re`)"  # Règle de routage
+      - "traefik.http.routers.phpmyadmin.entrypoints=web,websecure"
       #- "traefik.http.routers.phpmyadmin.tls.certresolver=letsencrypt"
-      - "traefik.http.middlewares.phpmyadmin-strip.stripprefix.prefixes=/SQLmyAdmin/"
-      - "traefik.http.routers.phpmyadmin.middlewares=phpmyadmin-strip"
-      - "traefik.http.routers.phpmyadmin.entrypoints=web"
       - "traefik.http.services.phpmyadmin.loadbalancer.server.port=80"
       - "traefik.docker.network=webTraefik"  # Réseau Docker utilisé par Traefik
     networks:
