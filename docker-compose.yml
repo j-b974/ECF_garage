@@ -19,8 +19,6 @@ services:
       - .:/var/www/
     depends_on:
       - db
-    ports:
-      - "8000:80"
     networks:
       - webTraefik
   db:
@@ -34,7 +32,7 @@ services:
     env_file:
       - .env.db
     ports:
-      - "3306:3306"
+      - "3366:3306"
     networks:
       - webTraefik
   phpmyadmin:
@@ -42,8 +40,6 @@ services:
     container_name: admin_bd_garage
     env_file:
       - .env.mydb
-    ports:
-      - "8080:80"
     restart: always
     volumes:
       #- ./PhpMyAdminConfig/config.inc.php:/etc/phpmyadmin/config.inc.php
