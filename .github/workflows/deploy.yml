@@ -31,29 +31,38 @@ jobs:
         uses: appleboy/ssh-action@master
         env:
           PATH_DIRECTORY: ${{ secrets.VPS_DIRECTORY }}
-          messenger: ${{ secrets.MESSENGER_TRANSPORT_DSN }}
-          url: ${{ secrets.APP_URL }}
-          pwd: ${{ secrets.GARAGE_DATABASE_PASSWORD }}
-          userdb: ${{ secrets.GARAGE_DATABASE_USER }}
-          urldb: ${{ secrets.GARAGE_DATABASE_URL }}
-          urldata: ${{ secrets.DATABASE_URL }}
-          secreteapp: ${{ secrets.APP_SECRET }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          envs:  PATH_DIRECTORY,messenger,url,pwd,userdb,urldb,urldata,secreteapp
+          envs:  PATH_DIRECTORY
           script: |
             cd $PATH_DIRECTORY
             ls -al
             cat << EOF > .env
-              MESSENGER_TRANSPORT_DSN=$messenger
+              MESSENGER_TRANSPORT_DSN=${{ secrets.MESSENGER_TRANSPORT_DSN }}
               APP_URL=${{secrets.DATABASE_URL}}
-              GARAGE_DATABASE_PASSWORD=$pwd
-              GARAGE_DATABASE_USER=$userdb
-              GARAGE_DATABASE_URL=$urldb
-              DATABASE_URL=$urldata
-              APP_SECRET=$secreteapp 
-              APP_ENV=prodlsls
+              GARAGE_DATABASE_PASSWORD=${{ secrets.GARAGE_DATABASE_PASSWORD }}
+              GARAGE_DATABASE_USER=${{ secrets.GARAGE_DATABASE_USER }}
+              GARAGE_DATABASE_URL=${{ secrets.GARAGE_DATABASE_URL }}
+              DATABASE_URL=${{ secrets.DATABASE_URL }}
+              APP_SECRET=${{ secrets.APP_SECRET }} 
+              APP_ENV=prod
             EOF
             chmod 600 .env
+            cat << EOF > .env.db
+              MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+              MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+              MYSQL_USER=${{ secrets.MYSQL_USER }}
+              MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+            EOF
+            chmod 600 .env.db
+            cat << EOF > .env.mydb
+              PMA_HOST=${{ secrets.PMA_HOST }}
+              PMA_PORT=${{ secrets.PMA_PORT }}
+              PMA_ARBITRARY=${{ secrets.PMA_ARBITRARY }}
+              PMA_ABSOLUTE_URI=${{ secrets.PMA_ABSOLUTE_URI }}
+            EOF
+            chmod 600 .env.mydb
+            docker-compose down
+            docker-compose up -d
