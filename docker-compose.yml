@@ -3,6 +3,7 @@ version: '2.3'
 services:
   web:
     build:
+      context: .
       dockerfile: Dockerfile
     image: image_garage
     env_file:
