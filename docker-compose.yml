@@ -10,10 +10,10 @@ services:
       - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.app.rule=Host(`garage.bertil.re`)"
-      - "traefik.http.routers.app.entrypoints=web,websecure"
+      - "traefik.http.routers.garage.rule=Host(`garage.bertil.re`)"
+      - "traefik.http.routers.garage.entrypoints=web,websecure"
        # Indique à Traefik le port interne sur lequel le service écoute (ici 80)
-      - "traefik.http.services.app.loadbalancer.server.port=80"
+      - "traefik.http.services.garage.loadbalancer.server.port=80"
       - "traefik.docker.network=webTraefik"  # Réseau Docker utilisé par Traefik
     volumes:
       - .:/var/www/
