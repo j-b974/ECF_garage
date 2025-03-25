@@ -48,12 +48,12 @@ jobs:
             ls -al
             cat << EOF > .env
               MESSENGER_TRANSPORT_DSN=$messenger
-              APP_URL=$url 
+              APP_URL=${{secrets.DATABASE_URL}}
               GARAGE_DATABASE_PASSWORD=$pwd
               GARAGE_DATABASE_USER=$userdb
               GARAGE_DATABASE_URL=$urldb
               DATABASE_URL=$urldata
               APP_SECRET=$secreteapp 
-              APP_ENV=prod
+              APP_ENV=prodlsls
             EOF
             chmod 600 .env
