@@ -46,7 +46,7 @@ jobs:
           script: |
             cd $PATH_DIRECTORY
             ls -al
-            cat << 'EOF' > .env
+            cat << EOF > .env
               MESSENGER_TRANSPORT_DSN=$messenger
               APP_URL=$url 
               GARAGE_DATABASE_PASSWORD=$pwd
