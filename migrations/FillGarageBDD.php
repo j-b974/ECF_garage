@@ -64,7 +64,7 @@ $Tcontact = new \App\Repository\TableContact($bdd);
 $newMessage = 2;
 for($i=0;$i<=10;$i++)
 {
-    $contact = new \App\Entity\contact();
+    $contact = new \App\Entity\Contact();
     $contact->setNom($faker->lastName())
         ->setPrenom($faker->firstName())
         ->setAdressEmail($faker->email())

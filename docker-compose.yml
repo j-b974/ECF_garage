@@ -32,7 +32,7 @@ services:
     env_file:
       - .env.db
     ports:
-      - "3366:3306"
+      - "3366:3366"
     networks:
       - webTraefik
   phpmyadmin:

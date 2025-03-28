@@ -49,20 +49,22 @@ jobs:
               APP_SECRET=${{ secrets.APP_SECRET }} 
               APP_ENV=prod
             EOF
-            chmod 600 .env
+            chmod 666 .env
             cat << EOF > .env.db
               MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
               MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
               MYSQL_USER=${{ secrets.MYSQL_USER }}
               MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}
+              MYSQL_TCP_PORT=${{ secrets.MYSQL_TCP_PORT }}
+              MYSQL_HOST=${{ secrets.MYSQL_HOST }}
             EOF
-            chmod 600 .env.db
+            chmod 666 .env.db
             cat << EOF > .env.mydb
               PMA_HOST=${{ secrets.PMA_HOST }}
               PMA_PORT=${{ secrets.PMA_PORT }}
               PMA_ARBITRARY=${{ secrets.PMA_ARBITRARY }}
               PMA_ABSOLUTE_URI=${{ secrets.PMA_ABSOLUTE_URI }}
             EOF
-            chmod 600 .env.mydb
+            chmod 666 .env.mydb
             docker-compose down
             docker-compose up -d --build
