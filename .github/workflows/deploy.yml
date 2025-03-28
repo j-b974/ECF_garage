@@ -41,7 +41,7 @@ jobs:
             ls -al
             cat << EOF > .env
               MESSENGER_TRANSPORT_DSN=${{ secrets.MESSENGER_TRANSPORT_DSN }}
-              APP_URL=${{secrets.DATABASE_URL}}
+              APP_URL=${{secrets.APP_URL}}
               GARAGE_DATABASE_PASSWORD=${{ secrets.GARAGE_DATABASE_PASSWORD }}
               GARAGE_DATABASE_USER=${{ secrets.GARAGE_DATABASE_USER }}
               GARAGE_DATABASE_URL=${{ secrets.GARAGE_DATABASE_URL }}

@@ -41,10 +41,6 @@ services:
     env_file:
       - .env.mydb
     restart: always
-    volumes:
-      #- ./PhpMyAdminConfig/config.inc.php:/etc/phpmyadmin/config.inc.php
-      - ./certificatBdd:/etc/mysql/ssl
-      - ./config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
     depends_on:
       - db
     labels:
