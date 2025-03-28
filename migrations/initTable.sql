@@ -108,4 +108,3 @@ CREATE TABLE IF NOT EXISTS image_voiture(
             ON DELETE CASCADE
             ON UPDATE RESTRICT
 )ENGINE=InnoDB;
-ALTER TABLE caracteristique_voiture CONVERT TO CHARACTER SET utf8_mb4_unicode_ci COLLATE utf8_general_ci;
