@@ -63,7 +63,7 @@ class AdminCompteController extends AbstractController
                 " l' Adresse Email  #{$form->getData()->getAdressEmail()} exite déjà !!!");
        }
 
-        return $this->render('Pages/administration/compte/AjouteCompte.html.twig',[
+        return $this->render('Pages/administration/compte/ajouteCompte.html.twig',[
             'form'=> $form->createView()
         ]);
     }

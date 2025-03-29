@@ -8,7 +8,7 @@
 
     {% if not lstNewAvis is same as([]) %}
     <div class="row justify-content-center">
-        {% include 'partials/Cards/newAvisCard.html.twig' %}
+        {% include 'partials/cards/newAvisCard.html.twig' %}
     </div>
     {%  else%}
         <div class="alert alert-info "> il n'y a pas de nouveau Avis !</div>
@@ -17,7 +17,7 @@
 
     <p><a class="btn btn-info" href={{ path('create_avis') }}>Ajouter une Avis</a></p>
     {% if not lstAvis is same as([]) %}
-        {% include 'partials/Tableau/avisTableau.html.twig' %}
+        {% include 'partials/tableau/avisTableau.html.twig' %}
     {% else %}
         <h4>il n'y a pas de Avis !!!</h4>
     {% endif %}
