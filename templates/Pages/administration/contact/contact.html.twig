@@ -7,7 +7,7 @@
         <h2 class="text-center text-white mb-3" > nouveau message <span class="badge bg-danger">{{ nbNewContact }}</span></h2>
         {% if not lstNewContact is same as([]) %}
             {% set lstData = lstNewContact %}
-            {% include 'partials/Tableau/ContactTableau.html.twig' %}
+            {% include 'partials/tableau/ContactTableau.html.twig' %}
         {% else %}
             <div class="alert alert-primary" role="alert">
                 il n'y a pas de nouveau message
