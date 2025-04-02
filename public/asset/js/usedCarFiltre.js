@@ -158,10 +158,13 @@ function createPaginationButtons() {
                 activeClass(pageButton);
                 displayList();
             });
-            if(i % 5 == 0){
-                span.appendChild(pageButton)
-                divPaginator.appendChild(span);
+            // limiter le nombres pages afficher sauf page active
+            if(i % 5 != 0 && !span.classList.contains('active')){
+                span.style.display='none';
             }
+            span.appendChild(pageButton)
+            divPaginator.appendChild(span);
+
 
         }
 
@@ -188,8 +191,13 @@ function activeClass(element){
     let span = element.parentNode.parentNode.querySelector('span.active');
     span&&span.classList.remove('active');
     span&&span.firstElementChild.classList.remove('bg-danger');
+    if(span && parseInt(span.childNodes[0].textContent) % 5 != 0 )
+    {
+        span.style.display='none';
+    }
     element.parentNode.classList.add('active');
     element.classList.add('bg-danger');
+    element.parentNode.style.display='inline';
 
 }
 
