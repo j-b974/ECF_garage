@@ -1,6 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand"  href= "{{ path('home') }}"><img class="logo" src="{{ asset('image/logo.png') }}"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -11,44 +14,44 @@
                     <a class="nav-link {{ usedCar ?? "" }} " href={{ path('usedCar') }}>Nos Voiture Occassion </a>
                 </li>
             </ul>
-        </div>
-        <div class="d-flex form-inline my-2 my-lg-0">
-            {% if app.user %}
-            <div class="dropdown my-2 my-sm-0">
-                <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Administration
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="countSomme">
+            <div class="d-flex form-inline my-2 my-lg-0 justify-content-between">
+                {% if app.user %}
+                <div class="dropdown my-2 my-sm-0">
+                    <button class="btn btn-outline-primary  dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Administration
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="countSomme">
                         <span class="visually-hidden">unread messages</span>
                             </span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ path('admin_avis') }}">Avis
-                            <span id ="countAvis" class="badge rounded-pill text-bg-danger ms-2"></span>
-                            <script>
-                                var routeCountAvis = "{{ path('count.avis')}}";
-                            </script>
-                        </a></li>
-                    <li><a class="dropdown-item {{ adminUsedCar ?? "" }}" href="{{ path('usedCar.view') }}">voiture d'occassion</a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_admin_contact') }}">Contact
-                            <span id ="countContact" class="badge rounded-pill text-bg-danger ms-2"></span>
-                            <script>
-                                var routeCountContact = "{{ path('count.contact')}}";
-                            </script>
-                        </a></li>
-                    <li><a class="dropdown-item" href="{{ path('app_admin_service') }}">Service</a></li>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{{ path('admin_avis') }}">Avis
+                                <span id ="countAvis" class="badge rounded-pill text-bg-danger ms-2"></span>
+                                <script>
+                                    var routeCountAvis = "{{ path('count.avis')}}";
+                                </script>
+                            </a></li>
+                        <li><a class="dropdown-item {{ adminUsedCar ?? "" }}" href="{{ path('usedCar.view') }}">voiture d'occassion</a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_contact') }}">Contact
+                                <span id ="countContact" class="badge rounded-pill text-bg-danger ms-2"></span>
+                                <script>
+                                    var routeCountContact = "{{ path('count.contact')}}";
+                                </script>
+                            </a></li>
+                        <li><a class="dropdown-item" href="{{ path('app_admin_service') }}">Service</a></li>
 
-                    {% if is_granted('ROLE_DIRECTEUR')  %}
-                        <hr>
-                        <li><a class="dropdown-item" href="{{ path('app_admin_compte') }}">Gerer les compte</a></li>
+                        {% if is_granted('ROLE_DIRECTEUR')  %}
+                            <hr>
+                            <li><a class="dropdown-item" href="{{ path('app_admin_compte') }}">Gerer les compte</a></li>
+                        {% endif %}
+                    </ul>
                     {% endif %}
-                </ul>
+                </div>
+                {% if app.user %}
+                    <a class="btn btn-outline-danger my-2 my-sm-0 ms-lg-4" href={{ path('app_logout') }}>Déconnexion</a>
+                {% else %}
+                    <a class="btn btn-outline-danger my-2 my-sm-0 ms-lg-4" href={{ path('app_login') }}>Connexion</a>
                 {% endif %}
             </div>
-            {% if app.user %}
-                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_logout') }}>Déconnexion</a>
-            {% else %}
-                <a class="btn btn-outline-danger my-2 my-sm-0 ms-4" href={{ path('app_login') }}>Connexion</a>
-            {% endif %}
         </div>
     </div>
 </nav>
