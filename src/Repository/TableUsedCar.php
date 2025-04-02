@@ -29,10 +29,6 @@ class TableUsedCar
         }
 
 
-
-        //$where = "where prix > $prixMin and prix < $prixMax
-                  //and kilometrage > $KmMin and kilometrage < $kmMax ";
-        //$query ="SELECT * FROM voiture_occasssion $where";
         $req = $this->bdd->prepare("SELECT * FROM voiture_occassion $where");
         $req->execute();
         $req->setFetchMode(PDO::FETCH_CLASS, UsedCar::class);
@@ -196,8 +192,12 @@ class TableUsedCar
     private function getWhere(array $list):string
     {
         $where = 'WHERE ';
+        $count = 1;
         foreach($list as $key =>  $value)
         {
+            // rajoute 'AND" entre chaque param
+            if($count > 1 ){ $where .= ' AND ';}
+
             $value = (int) $value;
 
             switch($key){
@@ -206,22 +206,23 @@ class TableUsedCar
                     $where .= ' prix >  '.$value ; break;
                 case 'maxPrix':
                     if($this->getMaximun('prix') < $value){ $value = $this->getMaximun(('prix'));}
-                    $where .= ' AND prix < '.$value;break;
+                    $where .= 'prix < '.$value;break;
                 case 'minKm':
                     if($this->getMinim('kilometrage') > $value){ $value = $this->getMinim(('kilometrage'));}
                     $where .= '  kilometrage > '.$value;break;
                 case 'maxKm':
                     if($this->getMaximun('kilometrage') < $value){ $value = $this->getMaximun(('kilometrage'));}
-                    $where .= ' AND kilometrage < '.$value;break;
+                    $where .= 'kilometrage < '.$value;break;
                 case 'minDate' :
                     if($this->getMinim('annee_fabrication') > $value){ $value = $this->getMinim(('annee_fabrication'));}
-                    $where .= '  annee_fabrication > '.$value;break;
+                    $where .= '  YEAR(annee_fabrication) > '.$value;break;
                 case 'maxDate':
                     if($this->getMaximun('annee_fabrication') < $value){ $value = $this->getMaximun(('annee_fabrication'));}
-                    $where .= ' AND annee_fabrication < '.$value;break;
+                    $where .= 'YEAR(annee_fabrication) < '.$value;break;
                 default :
                     return '';
             }
+            $count++;
         }
         return $where;
     }

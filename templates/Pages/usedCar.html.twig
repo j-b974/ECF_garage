@@ -7,59 +7,25 @@
     <style>
 
     </style>
-    <h1 class="text-center text-white mt-4 "> Voiture d'occassion</h1>
-    <div class="row d-flex flex-column flex-sm-row bg-white mb-4">
-        <div class="range col mt-4">
-            <label class=" mb-3">Prix</label>
-            <div class="range-slider">
-                <span class="range-selected prix"></span>
-            </div>
-            <div class="range-input ">
-                <input type="range" class="min" min="{{ minPrix }}" max="{{ maxPrix }}" value="{{ minPrix }}" step="500" data-name="minPrix">
-                <input type="range" class="max" min="{{ minPrix }}" max="{{ maxPrix }}" value="{{ maxPrix }}" step="500" data-name ="maxPrix">
-            </div>
-            <div class="range-price">
-                <input type="number" min="{{ minPrix }}" max="{{ maxPrix }}" name="min" value="{{ minPrix }}" class="min" step="500" data-name="minPrix">
-                <input type="number"  min="{{ minPrix }}" max="{{ maxPrix }}" name="max" value="{{ maxPrix }}" step="500" data-name="maxPrix">
-            </div>
-        </div>
-        <div class="range col mt-4">
-            <label class=" mb-3">Kilométrage</label>
-            <div class="range-slider">
-                <span class="range-selected kilometrage"></span>
-            </div>
-            <div class="range-input">
-                <input type="range" class="min" min="{{ minKm }}" max="{{ maxKm }}" value="{{ minKm }}" step="1000" data-name="minKm">
-                <input type="range" class="max" min="{{ minKm }}" max="{{ maxKm }}" value="{{ maxKm }}" step="1000" data-name="maxKm">
-            </div>
-            <div class="range-price">
-                <input type="number" name="min" min="{{ minKm }}" max="{{ maxKm }}" value="{{ minKm }}" class="min" step="1000" data-name="minKm" >
-                <input type="number" name="max" min="{{ minKm }}" max="{{ maxKm }}" value="{{ maxKm }}" step="1000" data-name="maxKm">
-            </div>
-        </div>
-        <div class="range col mt-4">
-            <label class=" mb-3">Année</label>
-            <div class="range-slider">
-                <span class="range-selected annee"></span>
-            </div>
-            <div class="range-input">
-                <input type="range" class="min" min="{{ minDate }}" max="{{ maxDate }}" value="1975" step="1" data-name="minDate">
-                <input type="range" class="max" min="{{ minDate }}" max="{{ maxDate }}" value="2024" step="1" data-name="maxDate">
-            </div>
-            <div class="range-price">
-                <input type="number" min="{{ minDate }}" max="{{ maxDate }}" name="min" value="1975" class="min" step="1" data-name="minDate">
-                <input type="number"  min="{{ minDate }}" max="{{ maxDate }}" name="max" value="2024" step="1" data-name="maxDate">
-            </div>
-        </div>
-        <a class="btn btn-dark" id="btnFiltre"  data-link ="{{ path('data.usedCar') }}" >Validez</a>
+    <h1 class="text-center text-white mt-4"> Voiture d'occassion</h1>
 
+    <div class="row d-flex flex-column flex-sm-row bg-white mb-4 relative">
+        <div class="d-flex flex-column flex-sm-col flex-md-col flex-lg-row  justify-content-between align-items-center">
+            {% for  range in listeRanges %}
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-12">
+                    {{ range.render() }}
+                </div>
+            {% endfor %}
+        </div>
+        <a class="btn btn-dark mb-2 " id="btnFiltre" data-link ="{{ path('data.usedCar') }}" >Validez</a>
     </div>
+
     {% include 'partials/cards/usedCarCard.html.twig' %}
     <div class=" d-flex justify-content-center mb-4" id="pagination">
         {{ knp_pagination_render(lstCar) }}
     </div>
 
 {% endblock %}
-{% block javascripts %}
+{% block endJavascripts %}
     <script src="{{ asset('asset/js/usedCarFiltre.js') }}"  crossorigin="anonymous" defer></script>
 {% endblock %}

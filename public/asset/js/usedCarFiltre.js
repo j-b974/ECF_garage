@@ -1,73 +1,32 @@
-let rangeMin = 10;
-//let range = document.querySelector(".range-selected");
-const rangeInput = document.querySelectorAll(".range-input input");
-const rangePrice = document.querySelectorAll(".range-price input");
+
 const paginator = document.querySelector("#pagination");
-let minPrix , maxPrix ,minKm , maxKm ,minDate ,maxDate;
-rangeInput.forEach((input) => {
-    input.addEventListener("input", function(e)  {
 
-       let range = input.parentElement.parentElement.querySelector(".range-selected");
-        let minRange = parseInt(this.parentNode.firstElementChild.value);
-        let maxRange = parseInt(this.parentNode.lastElementChild.value);
-        recupData(minRange, this.parentNode.firstElementChild)
-        recupData(maxRange , this.parentNode.lastElementChild)
-        if (maxRange - minRange < rangeMin) {
-            if (e.target.className === "min") {
-                this.value = maxRange - rangeMin;
-            } else {
-                this.value = minRange + rangeMin;
-            }
-        } else {
+function btnprixId() {
 
-            this.parentNode.parentNode.lastElementChild.children[0].value = minRange;
-            this.parentNode.parentNode.lastElementChild.children[1].value = maxRange;
+    const elMinPrix = document.querySelector('#prixId-min-value');
+    const elMaxPrix = document.querySelector('#prixId-max-value');
 
-            range.style.left = (minRange / parseInt(this.parentNode.firstElementChild.max)) * 100 + "%";
-            range.style.right = 100 - (maxRange / parseInt(this.parentNode.lastElementChild.max)) * 100 + "%";
-            //range.style.left = (minRange / rangeInput[0].max) * 100 + "%";
-            //range.style.right = 100 - (maxRange / rangeInput[1].max) * 100 + "%";
+    let attribut = `minPrix=${elMinPrix.value}&maxPrix=${elMaxPrix.value}`;
+    CallData(attribut);
+}
+function btnkilometrageId() {
 
-        }
-    });
-});
+    const elMinKm = document.querySelector('#kilometrageId-min-value');
+    const elMaxKm = document.querySelector('#kilometrageId-max-value');
 
-rangePrice.forEach((input) => {
-    input.addEventListener("input",function (e) {
-        let range = input.parentElement.parentElement.querySelector(".range-selected");
+    let attribut = `minKm=${elMinKm.value}&maxKm=${elMaxKm.value}`;
+    CallData(attribut);
+}
 
-        let inputMin = this.parentNode.parentNode.lastElementChild.children[0]
-        let rangeMax = this.parentNode.parentNode.lastElementChild.children[1]
-        let slidMin = this.parentNode.parentNode.children[2].children[0]
-        let slidMax = this.parentNode.parentNode.children[2].children[1]
+function btnanneeId() {
 
-        //console.log('min', rangeMin ,'max ',rangeMax)
-        let minPrice =parseInt( inputMin.value);
-        let maxPrice = parseInt(rangeMax.value);
-        //console.log(rangeMax.value , maxPrice)
-        //console.log(maxPrice <= slidMax.max)
-        //console.log(slidMax.max)
+    const elMinDate = document.querySelector('#anneeId-min-value');
+    const elMaxDate = document.querySelector('#anneeId-max-value');
 
-        recupData(minPrice, inputMin)
-        recupData(maxPrice , rangeMax)
+    let attribut = `minDate=${elMinDate.value}&maxDate=${elMaxDate.value}`;
+    CallData(attribut);
+}
 
-        if (maxPrice - minPrice >= rangeMin && maxPrice <= parseInt(slidMax.max)) {
-
-            console.log(e.target.className)
-            if (e.target.className === "min") {
-
-                slidMin.value = minPrice;
-                range.style.left = (minPrice / parseInt(slidMin.max)) * 100 + "%";
-
-            } else {
-
-                slidMax.value = maxPrice;
-                range.style.right = 100 - (maxPrice / parseInt(slidMax.max)) * 100 + "%";
-            }
-        }
-    });
-});
-// ============
 
 function addUsedCar( viewPage , data){
 
@@ -199,8 +158,11 @@ function createPaginationButtons() {
                 activeClass(pageButton);
                 displayList();
             });
-            span.appendChild(pageButton)
-            divPaginator.appendChild(span);
+            if(i % 5 == 0){
+                span.appendChild(pageButton)
+                divPaginator.appendChild(span);
+            }
+
         }
 
         const nextButton = document.createElement("button");
@@ -224,8 +186,8 @@ function activeClass(element){
 
 
     let span = element.parentNode.parentNode.querySelector('span.active');
-    span.classList.remove('active');
-    span.firstElementChild.classList.remove('bg-danger');
+    span&&span.classList.remove('active');
+    span&&span.firstElementChild.classList.remove('bg-danger');
     element.parentNode.classList.add('active');
     element.classList.add('bg-danger');
 
@@ -235,20 +197,40 @@ function activeClass(element){
 
 
 // appelle data filtrer
+
 btnValid.addEventListener('click',e=>{
     e.preventDefault();
-    let attribut = '?minPrix='+minPrix+'&maxPrix='+maxPrix+
-        '&minKm='+minKm+'&maxKm='+maxKm+
-        '&minDate='+minDate+'&maxDate='+maxDate;
 
-    fetch(btnValid.dataset.link+attribut)
+    const elMinPrix = document.querySelector('#prixId-min-value');
+    const elMaxPrix = document.querySelector('#prixId-max-value');
+
+    const elMinKm = document.querySelector('#kilometrageId-min-value');
+    const elMaxkm = document.querySelector('#kilometrageId-max-value');
+
+    const elMinDate = document.querySelector('#anneeId-min-value');
+    const elMaxDate = document.querySelector('#anneeId-max-value');
+
+    let attribut = `minPrix=${elMinPrix.value}&maxPrix=${elMaxPrix.value}&minKm=${elMinKm.value}&maxKm=${elMaxkm.value}&minDate=${elMinDate.value}&maxDate=${elMaxDate.value}`;
+    CallData(attribut);
+})
+
+/**
+ *
+ * @param attribut string "name=valeur "
+ *
+ * @constructor
+ */
+function CallData(attribut)
+{
+    fetch('/Voiture/Occassion/dataUsedCar?'+attribut)
         .then(reponse => reponse.json())
         .then(data =>{
 
-           dataList = data.dataUsedCar;
-           divPaginator.innerHTML="";
+            dataList = data.dataUsedCar;
+            divPaginator.innerHTML="";
             supprimePaginator();
             createPaginationButtons();
-           displayList();
+            displayList();
         })
-})
+
+}

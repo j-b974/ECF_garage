@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\DataBaseGarage;
 use App\Repository\TableUsedCar;
+use App\Services\DoubleRangeGenerator;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,7 +24,7 @@ class UserCarsController extends AbstractController
 
     }
     #[Route('/', name: 'usedCar')]
-    public function index(PaginatorInterface $paginator , Request $request): Response
+    public function index(PaginatorInterface $paginator , Request $request ): Response
     {
 
         $param = $request->query->all();
@@ -31,21 +32,48 @@ class UserCarsController extends AbstractController
             if((int) $value > 0) return (int) $value;
 
         });
+
         $lstCar = $paginator->paginate(
             $this->TusedCar->getAllUserCar($param),// les donne a paginer
             $request->query->getInt('page',1), // donne donne l'URL pour passer a la page suivate
             10
             );
 
+        // paramettre les double range
+
+        $lstDoubleRange = [];
+        $lstDoubleRange[]= new DoubleRangeGenerator(
+            $this->TusedCar->getMinim('prix'),
+            $this->TusedCar->getMaximun('prix'),
+            500,
+            $this->TusedCar->getMinim('prix'),
+            $this->TusedCar->getMaximun('prix'),
+            'prix',
+            'prixId'
+        );
+        $lstDoubleRange[] = new DoubleRangeGenerator(
+            $this->TusedCar->getMinim('kilometrage'),
+            $this->TusedCar->getMaximun('Kilometrage'),
+            1000,
+            $this->TusedCar->getMinim('kilometrage'),
+            $this->TusedCar->getMaximun('Kilometrage'),
+            'Kilometrage',
+            'kilometrageId'
+        );
+        $lstDoubleRange[] = new DoubleRangeGenerator(
+            $this->TusedCar->getMinim('annee_fabrication'),
+            $this->TusedCar->getMaximun('annee_fabrication'),
+            1,
+            $this->TusedCar->getMinim('annee_fabrication'),
+            $this->TusedCar->getMaximun('annee_fabrication'),
+            'Annee',
+            'anneeId'
+        );
+
         return $this->render('Pages/usedCar.html.twig', [
             'usedCar' => 'active',
             'image_fond'=>'parking.jpg',
-            'minPrix' => $this->TusedCar->getMinim('prix'),
-            'maxPrix'=>$this->TusedCar->getMaximun('prix'),
-            'minKm'=>$this->TusedCar->getMinim('kilometrage'),
-            'maxKm'=>$this->TusedCar->getMaximun('Kilometrage'),
-            'minDate'=>$this->TusedCar->getMinim('annee_fabrication'),
-            'maxDate'=>$this->TusedCar->getMaximun('annee_fabrication'),
+            'listeRanges'=> $lstDoubleRange,
             'lstCar'=>$lstCar
         ]);
     }
