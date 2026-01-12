@@ -66,5 +66,5 @@ jobs:
               PMA_ABSOLUTE_URI=${{ secrets.PMA_ABSOLUTE_URI }}
             EOF
             chmod 666 .env.mydb
-            docker-compose down
-            docker-compose up -d --build
+            docker compose down
+            docker compose up -d --build
