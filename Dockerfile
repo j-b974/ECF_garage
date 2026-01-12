@@ -80,7 +80,7 @@ RUN chown -R www-data:www-data /var/www/
 # Installation des dépendances avec Composer
 
 RUN cd /var/www/ && \
-composer update --no-interaction --no-ansi && composer install --no-interaction --no-ansi
+composer install --no-dev --prefer-dist --no-interaction --no-progress
 
 # change emplacement curseur commande
 WORKDIR /var/www/
