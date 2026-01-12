@@ -17,43 +17,54 @@ COPY ./public ./
 
 # Utiliser une image PHP officielle avec Apache
 FROM php:8.2-apache
+
+# Configuration Apache
+RUN a2enmod rewrite
+
 # Configuration de l'environnement
 ENV APACHE_DOCUMENT_ROOT=/var/www/public
 
-# Installation des dépendances nécessaires
-RUN apt-get update \
-    && apt-get install -y --fix-missing\
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
-        libwebp-dev \
-        libonig-dev \
-        libzip-dev \
-        unzip \
-        git \
-        curl \
-        imagemagick \
-        libmagickwand-dev --no-install-recommends \
-        libpq-dev
+# Dépendances système
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    libwebp-dev \
+    libonig-dev \
+    libzip-dev \
+    unzip \
+    git \
+    curl \
+    imagemagick \
+    libmagickwand-dev \
+    libpq-dev \
+    pkg-config \
+    --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installation des extensions PHP nécessaires
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
+# Extensions PHP de base
+RUN docker-php-ext-install \
+    pdo_mysql \
+    mbstring \
+    zip \
+    exif \
+    pcntl
 
-# Installer l'extension GD
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
-    && docker-php-ext-install -j$(nproc) gd
+# Extension GD
+RUN docker-php-ext-configure gd \
+    --with-freetype \
+    --with-jpeg \
+    --with-webp \
+    && docker-php-ext-install gd
 
-# Installer l'extension Imagick
-RUN pecl install imagick
-RUN docker-php-ext-enable imagick
+# Extension Imagick
+RUN pecl install imagick \
+    && docker-php-ext-enable imagick
 
 # Installation de Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 RUN composer --version
-
-# Configuration Apache
-RUN a2enmod rewrite
 
 # Copie des fichiers de l'application dans le conteneur
 COPY . /var/www/
