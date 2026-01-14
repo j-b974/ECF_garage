@@ -15,6 +15,6 @@ $sqlFilePath = __DIR__.'/initTable.sql';
     if ($result === false) {
         echo "Erreur d'exécution : " . print_r($pdo->errorInfo(), true);
     } else {
-        echo "Exécution réussie!";
+        echo "Exécution réussie!\n";
     }
     $pdo = null;

@@ -16,7 +16,7 @@ COPY ./public ./
 # lance le build ici
 
 # Utiliser une image PHP officielle avec Apache
-FROM php:8.2-apache
+FROM php:8.4.16-apache-bookworm
 
 # Configuration Apache
 RUN a2enmod rewrite
@@ -79,8 +79,7 @@ COPY ./ServerGarage.conf /etc/apache2/sites-available/000-default.conf
 RUN chown -R www-data:www-data /var/www/
 # Installation des dépendances avec Composer
 
-RUN cd /var/www/ && \
-composer install --no-dev --prefer-dist --no-interaction --no-progress
+RUN cd /var/www/ &&  composer install --no-dev --prefer-dist --no-interaction --no-progress --no-scripts
 
 # change emplacement curseur commande
 WORKDIR /var/www/

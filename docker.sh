@@ -1,3 +1,3 @@
-php migrations/initTableGarage.php
-php migrations/FillGarageBDD.php
+#!/bin/bash
+set -e
 exec apache2-foreground

@@ -8,15 +8,29 @@ services:
       - .env
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.garage.rule=Host(`garage.bertil.re`)"
-      - "traefik.http.routers.garage.entrypoints=web,websecure"
-       # Indique à Traefik le port interne sur lequel le service écoute (ici 80)
+
+      # 🔹 Router HTTP
+      - "traefik.http.routers.garage-http.rule=Host(`garage.bertil.re`)"
+      - "traefik.http.routers.garage-http.entrypoints=web"
+      - "traefik.http.routers.garage-http.middlewares=garage-https-redirect"
+
+      # 🔹 Router HTTPS
+      - "traefik.http.routers.garage-https.rule=Host(`garage.bertil.re`)"
+      - "traefik.http.routers.garage-https.entrypoints=websecure"
+      - "traefik.http.routers.garage-https.tls=true"
+      - "traefik.http.routers.garage-https.tls.certresolver=cloudflare"
+
+      # 🔹 Middleware redirection HTTP → HTTPS
+      - "traefik.http.middlewares.garage-https-redirect.redirectscheme.scheme=https"
+
+      # 🔹 Service
       - "traefik.http.services.garage.loadbalancer.server.port=80"
-      - "traefik.docker.network=webTraefik"  # Réseau Docker utilisé par Traefik
+      - "traefik.docker.network=webTraefik"
     volumes:
       - .:/var/www/
     depends_on:
       - db
+    restart: always
     networks:
       - webTraefik
   db:
